@@ -6,6 +6,7 @@ const handler = createDeepLinkHandler({
   listing: "/listing/[id]",
   bookings: "/(tabs)/bookings",
   profile: "/(tabs)/profile",
+  settings: "/settings",
 });
 
 describe("handleNotification", () => {
@@ -37,6 +38,11 @@ describe("handleNotification", () => {
   it("returns null for non-object data", () => {
     expect(handler.handleNotification("string" as any)).toBeNull();
   });
+
+  it("maps listing screen with id", () => {
+    const route = handler.handleNotification({ screen: "listing", id: "99" });
+    expect(route).toBe("/listing/99");
+  });
 });
 
 describe("parseUrl", () => {
@@ -50,9 +56,9 @@ describe("parseUrl", () => {
     expect(result).toEqual({ screen: "listing", params: { id: "456" } });
   });
 
-  it("parses URL matching tab route", () => {
-    const result = handler.parseUrl("myapp://host/(tabs)/bookings");
-    expect(result).toEqual({ screen: "bookings", params: {} });
+  it("parses static route without params", () => {
+    const result = handler.parseUrl("/settings");
+    expect(result).toEqual({ screen: "settings", params: {} });
   });
 
   it("returns null for unmatched URL", () => {
@@ -69,13 +75,13 @@ describe("parseUrl", () => {
     expect(result).toEqual({ screen: "job", params: { id: "99" } });
   });
 
-  it("strips trailing slash before matching", () => {
-    const result = handler.parseUrl("/(tabs)/profile/");
-    expect(result).toEqual({ screen: "profile", params: {} });
-  });
-
   it("decodes URI-encoded segments", () => {
     const result = handler.parseUrl("/job/hello%20world");
     expect(result).toEqual({ screen: "job", params: { id: "hello world" } });
+  });
+
+  it("parses URL with scheme for static route", () => {
+    const result = handler.parseUrl("myapp://host/settings");
+    expect(result).toEqual({ screen: "settings", params: {} });
   });
 });

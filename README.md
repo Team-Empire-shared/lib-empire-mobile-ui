@@ -367,7 +367,7 @@ npm install
 npm test
 ```
 
-Tests are in `src/__tests__/` and cover components (Toast, ErrorBoundary, CachedImage) and lib modules (cache, permissions, deepLinkHandler, errorReporting, appUpdate).
+92 tests across 12 suites covering components (Avatar, AnimatedButton, CachedImage, EmptyState, ErrorBoundary, SkeletonCard, Toast) and lib modules (appUpdate, cache, deepLinkHandler, errorReporting, permissions).
 
 ## Development
 

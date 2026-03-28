@@ -1,0 +1,11 @@
+export const setNotificationHandler = jest.fn();
+export const getPermissionsAsync = jest.fn().mockResolvedValue({ status: "granted", canAskAgain: true });
+export const requestPermissionsAsync = jest.fn().mockResolvedValue({ status: "granted", canAskAgain: true });
+export const getExpoPushTokenAsync = jest.fn().mockResolvedValue({ data: "mock-token" });
+export const setNotificationChannelAsync = jest.fn();
+export const useLastNotificationResponse = () => null;
+export const addNotificationResponseReceivedListener = jest.fn(() => ({ remove: jest.fn() }));
+export const removeNotificationSubscription = jest.fn();
+export const getLastNotificationResponseAsync = jest.fn().mockResolvedValue(null);
+export const AndroidImportance = { HIGH: 4 };
+export const AndroidNotificationPriority = { HIGH: "high" };

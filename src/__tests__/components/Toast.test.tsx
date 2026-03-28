@@ -1,8 +1,9 @@
-import { useToastStore, toast } from "../../components/Toast";
+import React from "react";
+import { render } from "@testing-library/react-native";
+import { ToastContainer, useToastStore, toast } from "../../components/Toast";
 
 beforeEach(() => {
   jest.useFakeTimers();
-  // Reset store between tests
   useToastStore.setState({ toasts: [] });
 });
 
@@ -58,5 +59,21 @@ describe("toast convenience functions", () => {
     remove(errorToast.id);
     expect(useToastStore.getState().toasts).toHaveLength(1);
     expect(useToastStore.getState().toasts[0].type).toBe("success");
+  });
+});
+
+describe("ToastContainer", () => {
+  it("renders null when no toasts", () => {
+    const { toJSON } = render(<ToastContainer />);
+    expect(toJSON()).toBeNull();
+  });
+
+  it("renders toast items when toasts exist", () => {
+    // Pre-populate the store before render
+    useToastStore.setState({
+      toasts: [{ id: 999, message: "Hello", type: "success" as const }],
+    });
+    const { toJSON } = render(<ToastContainer />);
+    expect(toJSON()).toBeTruthy();
   });
 });
