@@ -17,13 +17,36 @@
     "expo-local-authentication": ">=14.0.0",
     "@react-native-async-storage/async-storage": ">=1.21.0",
     "@react-native-community/netinfo": ">=11.0.0",
-    "expo-notifications": ">=0.28.0"
+    "expo-notifications": ">=0.28.0",
+    "expo-image": ">=1.0.0",
+    "expo-router": ">=3.0.0",
+    "expo-image-picker": ">=15.0.0",
+    "expo-location": ">=17.0.0",
+    "expo-camera": ">=15.0.0"
   },
   "peerDependenciesMeta": {
     "expo-updates": {
       "optional": true
     },
     "@sentry/react-native": {
+      "optional": true
+    },
+    "expo-image": {
+      "optional": true
+    },
+    "expo-router": {
+      "optional": true
+    },
+    "expo-image-picker": {
+      "optional": true
+    },
+    "expo-location": {
+      "optional": true
+    },
+    "expo-notifications": {
+      "optional": true
+    },
+    "expo-camera": {
       "optional": true
     }
   },

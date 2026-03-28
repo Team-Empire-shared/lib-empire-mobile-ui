@@ -122,3 +122,14 @@ export {
   type RouteMap,
   type DeepLinkHandler,
 } from "./lib/deepLinkHandler";
+export {
+  requestPermission,
+  checkPermission,
+  showSettingsAlert,
+  usePermission,
+  type PermissionType,
+  type PermissionResult,
+  type UsePermissionReturn,
+} from "./lib/permissions";
+export { useCamera, type UseCameraResult } from "./lib/useCamera";
+export { usePhotos, type UsePhotosResult } from "./lib/usePhotos";
