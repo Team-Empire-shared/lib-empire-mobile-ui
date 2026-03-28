@@ -40,6 +40,16 @@ export {
   type AnalyticsProvider,
 } from "./lib/analytics";
 export {
+  checkForUpdate,
+  fetchAndApplyUpdate,
+  useAppUpdate,
+  type UpdateStatus,
+} from "./lib/appUpdate";
+export {
+  errorReporter,
+  type ErrorReporter,
+} from "./lib/errorReporting";
+export {
   colors,
   productColors,
   spacing,
@@ -105,3 +115,10 @@ export {
   type PushNotificationOptions,
   type PushNotificationResult,
 } from "./lib/usePushNotifications";
+export { CachedImage, type CachedImageProps } from "./components/CachedImage";
+export {
+  createDeepLinkHandler,
+  useNotificationRouter,
+  type RouteMap,
+  type DeepLinkHandler,
+} from "./lib/deepLinkHandler";

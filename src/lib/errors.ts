@@ -1,4 +1,5 @@
 import { Alert } from "react-native";
+import { errorReporter } from "./errorReporting";
 
 export class NetworkError extends Error {
   constructor(message = "Network request failed. Check your connection.") {
@@ -27,7 +28,8 @@ export function isNetworkError(err: unknown): boolean {
 
 /**
  * Centralized error handler for screens.
- * Shows appropriate Alert based on error type.
+ * Shows appropriate Alert based on error type and reports to Sentry
+ * (or console fallback) via the shared errorReporter.
  */
 export function handleError(err: unknown, context = "Error"): void {
   if (err instanceof NetworkError) {
@@ -38,6 +40,16 @@ export function handleError(err: unknown, context = "Error"): void {
     Alert.alert(context, err.message);
   } else {
     Alert.alert(context, "Something went wrong. Please try again.");
+  }
+
+  // Report to centralized error reporter (Sentry or console fallback)
+  if (err instanceof Error) {
+    errorReporter.captureException(err, { context });
+  } else {
+    errorReporter.captureMessage(
+      `[${context}] ${String(err)}`,
+      "error",
+    );
   }
 
   if (__DEV__) {

@@ -19,6 +19,14 @@
     "@react-native-community/netinfo": ">=11.0.0",
     "expo-notifications": ">=0.28.0"
   },
+  "peerDependenciesMeta": {
+    "expo-updates": {
+      "optional": true
+    },
+    "@sentry/react-native": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@types/react": "^19.0.0",
     "typescript": "^5.7.0",
