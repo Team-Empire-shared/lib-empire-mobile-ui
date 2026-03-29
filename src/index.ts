@@ -35,6 +35,11 @@ export {
   handleError,
 } from "./lib/errors";
 export {
+  createApiClient,
+  type ApiClientOptions,
+  type ApiClient,
+} from "./lib/createApiClient";
+export {
   default as analytics,
   type EventProperties,
   type AnalyticsProvider,
@@ -51,6 +56,8 @@ export {
 } from "./lib/errorReporting";
 export {
   colors,
+  premiumDark,
+  premiumTabBarOptions,
   productColors,
   spacing,
   radius,
