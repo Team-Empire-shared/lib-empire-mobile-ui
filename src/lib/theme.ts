@@ -55,7 +55,7 @@ export const colors = {
 // ── Per-product accent overrides ──────────────────────────────────────────
 
 export const productColors = {
-  empireo: "#2563eb",
+  empireo: "#007AFF",
   recruitment: "#2563eb",
   eoe: "#2563eb",
   lwe: "#7c3aed",
@@ -215,3 +215,61 @@ export const commonStyles = {
     alignItems: "center",
   } as ViewStyle,
 } as const;
+
+// ── Apple Design System Colors ───────────────────────────────────────────
+
+export const appleColors = {
+  systemBlue: "#007AFF",
+  systemGreen: "#34C759",
+  systemOrange: "#FF9500",
+  systemRed: "#FF3B30",
+  systemYellow: "#FFCC00",
+  systemPurple: "#AF52DE",
+  systemPink: "#FF2D55",
+  systemTeal: "#5AC8FA",
+  label: "#1D1D1F",
+  secondaryLabel: "#86868B",
+  tertiaryLabel: "#AEAEB2",
+  separator: "#C6C6C8",
+  systemGray6: "#F2F2F7",
+  systemBackground: "#FFFFFF",
+  secondaryBackground: "#F2F2F7",
+} as const;
+
+export const cardShadow: ViewStyle = {
+  shadowColor: "#000",
+  shadowOffset: { width: 0, height: 1 },
+  shadowOpacity: 0.08,
+  shadowRadius: 8,
+  elevation: 2,
+};
+
+// ── Premium Dark Palette ─────────────────────────────────────────────────
+
+export const premiumDark = {
+  ...colors,
+  primary: "#007AFF",
+  background: "#000000",
+  card: "#1C1C1E",
+  cardBorder: "#2C2C2E",
+  border: "#38383A",
+  text: "#FFFFFF",
+  textSecondary: "#EBEBF5",
+  textMuted: "#8E8E93",
+};
+
+// ── Premium Tab Bar Options ──────────────────────────────────────────────
+
+export function premiumTabBarOptions(accentColor: string = "#007AFF") {
+  return {
+    tabBarActiveTintColor: accentColor,
+    tabBarInactiveTintColor: "#86868B",
+    tabBarStyle: {
+      backgroundColor: "#FFFFFF",
+      borderTopWidth: 0.5,
+      borderTopColor: "#C6C6C8",
+      paddingBottom: 4,
+      height: 84,
+    } as ViewStyle,
+  };
+}

@@ -56,6 +56,8 @@ export {
 } from "./lib/errorReporting";
 export {
   colors,
+  appleColors,
+  cardShadow,
   premiumDark,
   premiumTabBarOptions,
   productColors,
