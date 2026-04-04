@@ -1,16 +1,17 @@
 import { useRef, useEffect } from "react";
-import { Animated, type ViewStyle } from "react-native";
+import { Animated, type StyleProp, type ViewStyle } from "react-native";
+import { animations } from "../lib/theme";
 
 export interface FadeInViewProps {
   children: React.ReactNode;
   /** Delay in ms before animation starts (default 0) */
   delay?: number;
-  /** Duration in ms (default 400) */
+  /** Duration in ms (default animations.durations.normal = 300) */
   duration?: number;
   /** Slide up distance in pixels (default 16) */
   slideUp?: number;
   /** Container style */
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
 }
 
 /**
@@ -26,7 +27,7 @@ export interface FadeInViewProps {
 export function FadeInView({
   children,
   delay = 0,
-  duration = 400,
+  duration = animations.durations.normal,
   slideUp = 16,
   style,
 }: FadeInViewProps) {

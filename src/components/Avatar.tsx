@@ -6,6 +6,8 @@ export interface AvatarProps {
   size?: number;
   backgroundColor?: string;
   textColor?: string;
+  /** Accessibility label (defaults to "${name}'s avatar" or "User avatar") */
+  accessibilityLabel?: string;
 }
 
 /**
@@ -19,7 +21,9 @@ export function Avatar({
   size = 40,
   backgroundColor = "#e0e7ff",
   textColor = "#2563eb",
+  accessibilityLabel: a11yLabel,
 }: AvatarProps) {
+  const defaultA11yLabel = name && name !== "?" ? `${name}'s avatar` : "User avatar";
   const initials = name
     .split(" ")
     .map((n) => n[0])
@@ -41,6 +45,8 @@ export function Avatar({
           contentFit="cover"
           placeholder={{ blurhash: "L6PZfSi_.AyE_3t7t7R**0o#DgR4" }}
           transition={200}
+          accessibilityRole="image"
+          accessibilityLabel={a11yLabel ?? defaultA11yLabel}
         />
       );
     } catch {
@@ -49,6 +55,8 @@ export function Avatar({
         <Image
           source={{ uri }}
           style={{ width: size, height: size, borderRadius }}
+          accessibilityRole="image"
+          accessibilityLabel={a11yLabel ?? defaultA11yLabel}
         />
       );
     }
@@ -56,6 +64,8 @@ export function Avatar({
 
   return (
     <View
+      accessibilityRole="image"
+      accessibilityLabel={a11yLabel ?? defaultA11yLabel}
       style={{
         width: size,
         height: size,

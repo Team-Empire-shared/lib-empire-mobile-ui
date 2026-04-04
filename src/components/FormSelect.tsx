@@ -56,6 +56,9 @@ export function FormSelect({
         ]}
         onPress={() => !disabled && setVisible(true)}
         activeOpacity={disabled ? 1 : 0.7}
+        accessibilityRole="button"
+        accessibilityLabel={`${label}: ${selectedOption ? selectedOption.label : placeholder}`}
+        accessibilityState={{ expanded: visible, disabled }}
       >
         <Text
           style={[

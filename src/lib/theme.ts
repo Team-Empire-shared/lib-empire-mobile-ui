@@ -236,6 +236,33 @@ export const appleColors = {
   secondaryBackground: "#F2F2F7",
 } as const;
 
+// ── Animation Tokens ─────────────────────────────────────────────────────
+
+export const animations = {
+  durations: {
+    instant: 100,
+    fast: 150,
+    normal: 300,
+    slow: 500,
+    verySlow: 800,
+  },
+  easing: {
+    // These are for use with Animated.timing
+    default: undefined, // system default
+  },
+} as const;
+
+export const zIndex = {
+  base: 0,
+  dropdown: 10,
+  sticky: 20,
+  overlay: 30,
+  modal: 40,
+  popover: 50,
+  toast: 60,
+  tooltip: 70,
+} as const;
+
 export const cardShadow: ViewStyle = {
   shadowColor: "#000",
   shadowOffset: { width: 0, height: 1 },

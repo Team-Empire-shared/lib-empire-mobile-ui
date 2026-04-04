@@ -3,11 +3,11 @@ import { Text } from "react-native";
 import { render, screen, fireEvent } from "@testing-library/react-native";
 import { ErrorBoundary } from "../../components/ErrorBoundary";
 
-function BrokenChild(): JSX.Element {
+function BrokenChild(): React.JSX.Element {
   throw new Error("Test crash");
 }
 
-function GoodChild(): JSX.Element {
+function GoodChild(): React.JSX.Element {
   return <Text>Working</Text>;
 }
 

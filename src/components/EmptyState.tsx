@@ -55,7 +55,7 @@ export function EmptyState({
   const mutedColor = dark ? "#9ca3af" : "#6b7280";
 
   return (
-    <FadeInView delay={100} style={[{ alignItems: "center", paddingVertical: 48, paddingHorizontal: 32 }, style]}>
+    <FadeInView delay={100} style={{ alignItems: "center", paddingVertical: 48, paddingHorizontal: 32, ...style }}>
       {/* Icon circle */}
       <View
         style={{

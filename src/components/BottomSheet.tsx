@@ -110,7 +110,7 @@ export function BottomSheet({
   if (!visible) return null;
 
   return (
-    <Modal transparent visible={visible} animationType="none" onRequestClose={close}>
+    <Modal transparent visible={visible} animationType="none" onRequestClose={close} accessibilityViewIsModal={true}>
       {/* Backdrop */}
       <Animated.View
         style={{
@@ -119,7 +119,7 @@ export function BottomSheet({
           opacity: backdropOpacity,
         }}
       >
-        <Pressable style={{ flex: 1 }} onPress={close} />
+        <Pressable style={{ flex: 1 }} onPress={close} accessibilityRole="button" accessibilityLabel="Close bottom sheet" />
       </Animated.View>
 
       {/* Sheet */}

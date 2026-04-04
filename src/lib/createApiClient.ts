@@ -125,8 +125,12 @@ export function createApiClient(options: ApiClientOptions): ApiClient {
   // ── Request interceptor: attach Bearer token ─────────────────────────
 
   api.interceptors.request.use(async (config) => {
-    const token = await SecureStore.getItemAsync(tokenKey);
-    if (token) config.headers.Authorization = `Bearer ${token}`;
+    try {
+      const token = await SecureStore.getItemAsync(tokenKey);
+      if (token) config.headers.Authorization = `Bearer ${token}`;
+    } catch {
+      // SecureStore unavailable (web/simulator) — continue without token
+    }
     return config;
   });
 
@@ -151,7 +155,7 @@ export function createApiClient(options: ApiClientOptions): ApiClient {
       if (err.response?.status === 401 && !originalRequest._retry) {
         // Never retry the refresh endpoint itself
         if (originalRequest.url?.includes(refreshEndpoint)) {
-          await SecureStore.deleteItemAsync(tokenKey);
+          try { await SecureStore.deleteItemAsync(tokenKey); } catch {}
           _onUnauthorized?.();
           return Promise.reject(err);
         }
@@ -172,10 +176,12 @@ export function createApiClient(options: ApiClientOptions): ApiClient {
         try {
           const headers: Record<string, string> = {};
           if (sendTokenOnRefresh) {
-            const currentToken = await SecureStore.getItemAsync(tokenKey);
-            if (currentToken) {
-              headers.Authorization = `Bearer ${currentToken}`;
-            }
+            try {
+              const currentToken = await SecureStore.getItemAsync(tokenKey);
+              if (currentToken) {
+                headers.Authorization = `Bearer ${currentToken}`;
+              }
+            } catch {}
           }
 
           const { data } = await axios.post(
@@ -189,7 +195,7 @@ export function createApiClient(options: ApiClientOptions): ApiClient {
 
           if (!newToken) throw new Error("No token in refresh response");
 
-          await SecureStore.setItemAsync(tokenKey, newToken);
+          try { await SecureStore.setItemAsync(tokenKey, newToken); } catch {}
           api.defaults.headers.common.Authorization = `Bearer ${newToken}`;
           processQueue(null, newToken);
 
@@ -197,7 +203,7 @@ export function createApiClient(options: ApiClientOptions): ApiClient {
           return api(originalRequest);
         } catch (refreshError) {
           processQueue(refreshError, null);
-          await SecureStore.deleteItemAsync(tokenKey);
+          try { await SecureStore.deleteItemAsync(tokenKey); } catch {}
           _onUnauthorized?.();
           return Promise.reject(refreshError);
         } finally {

@@ -15,6 +15,10 @@ export interface FormTextInputProps extends Omit<TextInputProps, "style"> {
   disabled?: boolean;
   leftIcon?: React.ReactNode;
   containerStyle?: ViewStyle;
+  /** Accessibility label (defaults to label text) */
+  accessibilityLabel?: string;
+  /** Accessibility hint (defaults to error message when present) */
+  accessibilityHint?: string;
 }
 
 export function FormTextInput({
@@ -23,6 +27,8 @@ export function FormTextInput({
   disabled = false,
   leftIcon,
   containerStyle,
+  accessibilityLabel: a11yLabel,
+  accessibilityHint: a11yHint,
   ...inputProps
 }: FormTextInputProps) {
   const hasError = !!error;
@@ -39,6 +45,9 @@ export function FormTextInput({
       >
         {leftIcon && <View style={styles.iconContainer}>{leftIcon}</View>}
         <TextInput
+          accessible={true}
+          accessibilityLabel={a11yLabel ?? label}
+          accessibilityHint={a11yHint ?? (hasError ? error : undefined)}
           style={[
             styles.input,
             leftIcon ? styles.inputWithIcon : undefined,

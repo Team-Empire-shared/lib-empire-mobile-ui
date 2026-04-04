@@ -67,6 +67,8 @@ function ToastItem({ item }: { item: ToastMessage }) {
 
   return (
     <Animated.View
+      accessibilityRole="alert"
+      accessibilityLiveRegion={item.type === "error" ? "assertive" : "polite"}
       style={{
         transform: [{ translateY }],
         opacity,

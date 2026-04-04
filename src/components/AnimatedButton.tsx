@@ -7,6 +7,7 @@ import {
   type ViewStyle,
   type TextStyle,
 } from "react-native";
+import { animations } from "../lib/theme";
 
 export interface AnimatedButtonProps {
   /** Button label */
@@ -27,6 +28,8 @@ export interface AnimatedButtonProps {
   pressScale?: number;
   /** Variant */
   variant?: "primary" | "outline" | "danger" | "success";
+  /** Accessibility label (defaults to label text) */
+  accessibilityLabel?: string;
 }
 
 const VARIANTS: Record<string, { bg: string; text: string; border?: string }> = {
@@ -46,6 +49,7 @@ export function AnimatedButton({
   textStyle,
   pressScale = 0.96,
   variant = "primary",
+  accessibilityLabel,
 }: AnimatedButtonProps) {
   const scale = useRef(new Animated.Value(1)).current;
   const v = VARIANTS[variant] ?? VARIANTS.primary;
@@ -54,7 +58,7 @@ export function AnimatedButton({
     if (disabled || loading) return;
     Animated.timing(scale, {
       toValue: pressScale,
-      duration: 100,
+      duration: animations.durations.instant,
       useNativeDriver: true,
     }).start();
   }, [scale, pressScale, disabled, loading]);
@@ -73,6 +77,9 @@ export function AnimatedButton({
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
       onPress={disabled || loading ? undefined : onPress}
+      accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel ?? label}
+      accessibilityState={{ disabled: disabled || loading }}
     >
       <Animated.View
         style={[
