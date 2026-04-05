@@ -26,7 +26,8 @@
   "scripts": {
     "lint": "eslint src/ --ext .ts,.tsx",
     "test": "jest --passWithNoTests",
-    "build": "tsc"
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
     "react": ">=18.0.0",

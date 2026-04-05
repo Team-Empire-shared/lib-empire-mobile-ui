@@ -57,9 +57,9 @@ export const colors = {
 
 /** Per-product accent keys — each brand maps to its reference design-md palette. */
 export const productColors = {
-  empireo: "#533afd",
+  empireo: "#171717", // Vercel charcoal
   recruitment: "#533afd",
-  eoe: "#533afd",
+  eoe: "#171717", // Vercel charcoal (shared with Empireo)
   lwe: "#533afd",
   afterServices: "#ff385c", // Airbnb Rausch Red
   egpn: "#00b9ff", // Wise Bright Blue
@@ -292,6 +292,59 @@ export function recruitmentPremiumTabBarOptions(accentColor: string = productCol
 export const lweTheme = {
   ...colors,
 };
+
+// ── Empireo / EOE — Vercel monochrome ────────────────────────────────────
+
+/**
+ * EmpireO & EOE mobile — Vercel monochrome palette (light).
+ * Both Empireo.AI and Empire Overseas Education share this premium
+ * near-black ink aesthetic.
+ * @see Shared/awesome-design-md-main/design-md/vercel/DESIGN.md
+ */
+export const empireoTheme = {
+  ...colors,
+  primary: "#171717", // Charcoal
+  primaryLight: "rgba(23, 23, 23, 0.12)",
+  primaryDark: "#0a0a0a",
+  background: "#ffffff",
+  card: "#ffffff",
+  cardBorder: "#ebebeb",
+  border: "#ebebeb",
+  inputBorder: "#d4d4d4",
+  text: "#171717",
+  textSecondary: "#525252",
+  textMuted: "#666666",
+  textPlaceholder: "#a3a3a3",
+  info: "#171717",
+  infoLight: "rgba(23, 23, 23, 0.08)",
+} as const;
+
+/**
+ * EmpireO & EOE mobile (dark) — Vercel inverted monochrome.
+ * OLED-friendly pure-black canvas with white accent.
+ */
+export const empireoDarkTheme = {
+  ...premiumDark,
+  primary: "#fafafa",
+  primaryLight: "rgba(250, 250, 250, 0.12)",
+  primaryDark: "#ffffff",
+  background: "#000000",
+  card: "#0a0a0a",
+  cardBorder: "#262626",
+  border: "#262626",
+  inputBorder: "#404040",
+  text: "#fafafa",
+  textSecondary: "#d4d4d4",
+  textMuted: "#a3a3a3",
+  textPlaceholder: "#737373",
+  info: "#fafafa",
+  infoLight: "rgba(250, 250, 250, 0.14)",
+} as const;
+
+/** EOE (Empire Overseas Education) — alias of empireoTheme. */
+export const eoeTheme = empireoTheme;
+/** EOE dark — alias of empireoDarkTheme. */
+export const eoeDarkTheme = empireoDarkTheme;
 
 // ── Codnov — Linear light theme ──────────────────────────────────────────
 

@@ -58,7 +58,9 @@ export async function clearCache(prefix = "empire_cache:"): Promise<void> {
     const keys = await AsyncStorage.getAllKeys();
     const cacheKeys = keys.filter((k) => k.startsWith(prefix));
     if (cacheKeys.length > 0) {
-      await AsyncStorage.multiRemove(cacheKeys);
+      // Version-compatible: v2 uses multiRemove, v3 renamed it to removeMany.
+      // Iterate with removeItem to avoid the API divergence.
+      await Promise.all(cacheKeys.map((k) => AsyncStorage.removeItem(k)));
     }
   } catch {
     // best-effort
