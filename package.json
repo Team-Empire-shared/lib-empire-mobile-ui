@@ -1,5 +1,5 @@
 {
-  "name": "@empireoe/mobile-ui",
+  "name": "@team-empire-shared/mobile-ui",
   "version": "1.0.0",
   "description": "Empire mobile shared UI library — components, hooks, and utilities for all Empire product apps",
   "repository": {

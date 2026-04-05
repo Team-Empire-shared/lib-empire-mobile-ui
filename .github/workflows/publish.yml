@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: "20"
           registry-url: "https://npm.pkg.github.com"
-          scope: "@empireoe"
+          scope: "@team-empire-shared"
 
       - name: Install deps
         run: npm ci
