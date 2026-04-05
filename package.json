@@ -2,7 +2,14 @@
   "name": "@empireoe/mobile-ui",
   "version": "1.0.0",
   "description": "Empire mobile shared UI library — components, hooks, and utilities for all Empire product apps",
-  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Team-Empire-shared/empire-mobile-ui.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
   "main": "src/index.ts",
   "types": "src/index.ts",
   "exports": {
