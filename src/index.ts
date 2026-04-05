@@ -164,6 +164,41 @@ export {
   RecruitmentMarketingHeader,
   type RecruitmentMarketingHeaderProps,
 } from "./components/RecruitmentMarketingHeader";
+export { SearchBar, type SearchBarProps } from "./components/SearchBar";
+export { StepProgress, type StepProgressProps } from "./components/StepProgress";
+export {
+  StatusTimeline,
+  type StatusTimelineProps,
+  type TimelineEvent,
+} from "./components/StatusTimeline";
+export {
+  ChartCard,
+  type ChartCardProps,
+  type ChartDataPoint,
+} from "./components/ChartCard";
+export {
+  AvatarGroup,
+  type AvatarGroupProps,
+  type AvatarGroupUser,
+} from "./components/AvatarGroup";
+export { CalendarPicker, type CalendarPickerProps } from "./components/CalendarPicker";
+export { FileViewer, type FileViewerProps } from "./components/FileViewer";
+export { RichTextDisplay, type RichTextDisplayProps } from "./components/RichTextDisplay";
+export { ConfirmationDialog, type ConfirmationDialogProps } from "./components/ConfirmationDialog";
+export {
+  SyncIndicator,
+  type SyncIndicatorProps,
+  type SyncStatus,
+} from "./components/SyncIndicator";
+export { PullToRefreshHeader, type PullToRefreshHeaderProps } from "./components/PullToRefreshHeader";
+export {
+  FilterChips,
+  type FilterChipsProps,
+  type FilterChipOption,
+} from "./components/FilterChips";
+export { MetricCard, type MetricCardProps } from "./components/MetricCard";
+export { ImageGallery, type ImageGalleryProps } from "./components/ImageGallery";
+export { CountdownTimer, type CountdownTimerProps } from "./components/CountdownTimer";
 
 // ── Tier 0.1 — Offline-First Engine ───────────────────────────────────
 export { offlineDb, OfflineDatabase } from "./offline-database";
