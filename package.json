@@ -1,6 +1,7 @@
 {
-  "name": "@team-empire-shared/mobile-ui",
+  "name": "@empireoe/mobile-ui",
   "version": "1.0.0",
+  "private": true,
   "description": "Empire mobile shared UI library — components, hooks, and utilities for all Empire product apps",
   "repository": {
     "type": "git",
@@ -17,6 +18,7 @@
     "./testing": "./testing/index.ts"
   },
   "files": [
+    "DESIGN.md",
     "src",
     "testing"
   ],
@@ -37,6 +39,7 @@
     "expo-notifications": ">=0.28.0",
     "expo-image": ">=1.0.0",
     "expo-router": ">=3.0.0",
+    "react-native-safe-area-context": ">=4.0.0",
     "expo-image-picker": ">=15.0.0",
     "expo-location": ">=17.0.0",
     "expo-camera": ">=15.0.0"
@@ -52,6 +55,9 @@
       "optional": true
     },
     "expo-router": {
+      "optional": true
+    },
+    "react-native-safe-area-context": {
       "optional": true
     },
     "expo-image-picker": {
@@ -80,8 +86,16 @@
     "react": "^19.0.0",
     "react-native": "0.79.0",
     "zustand": "^5.0.0",
+    "axios": "^1.7.0",
+    "expo": "~53.0.0",
+    "expo-camera": "~55.0.0",
+    "expo-image-picker": "~55.0.0",
+    "expo-location": "~55.0.0",
+    "expo-notifications": "~55.0.0",
+    "expo-router": "~5.0.0",
     "expo-secure-store": "~14.2.0",
     "expo-local-authentication": "~15.0.0",
+    "expo-updates": "~55.0.0",
     "@react-native-async-storage/async-storage": "~2.1.0",
     "@react-native-community/netinfo": "~11.4.0"
   }

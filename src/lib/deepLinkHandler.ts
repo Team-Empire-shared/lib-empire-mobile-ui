@@ -191,9 +191,7 @@ export function useNotificationRouter(handler: DeepLinkHandler): void {
     });
 
     return () => {
-      if (responseListener.current) {
-        Notifications.removeNotificationSubscription(responseListener.current);
-      }
+      responseListener.current?.remove?.();
     };
   }, [handler, router]);
 }

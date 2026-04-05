@@ -59,6 +59,10 @@ export {
   appleColors,
   cardShadow,
   premiumDark,
+  recruitmentTheme,
+  recruitmentMarketingLinkOnDark,
+  recruitmentPremiumTabBarOptions,
+  lweTheme,
   premiumTabBarOptions,
   productColors,
   spacing,
@@ -146,3 +150,7 @@ export {
   PremiumLoginScreen,
   type PremiumLoginScreenProps,
 } from "./components/PremiumLoginScreen";
+export {
+  RecruitmentMarketingHeader,
+  type RecruitmentMarketingHeaderProps,
+} from "./components/RecruitmentMarketingHeader";

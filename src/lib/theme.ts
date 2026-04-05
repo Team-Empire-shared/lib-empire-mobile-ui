@@ -2,50 +2,51 @@ import { TextStyle, ViewStyle } from "react-native";
 
 // ── Colors ────────────────────────────────────────────────────────────────
 
+/** Default light palette — Stripe (`awesome-design-md-main/design-md/stripe/DESIGN.md`). */
 export const colors = {
   // Brand
-  primary: "#2563eb",
-  primaryLight: "#eff6ff",
-  primaryDark: "#1d4ed8",
+  primary: "#533afd",
+  primaryLight: "#ecebff",
+  primaryDark: "#4434d4",
 
   // Semantic
-  success: "#059669",
-  successLight: "#dcfce7",
-  warning: "#d97706",
-  warningLight: "#fef3c7",
-  danger: "#dc2626",
-  dangerLight: "#fef2f2",
-  info: "#2563eb",
-  infoLight: "#eff6ff",
+  success: "#15be53",
+  successLight: "rgba(21, 190, 83, 0.18)",
+  warning: "#9b6829",
+  warningLight: "rgba(155, 104, 41, 0.14)",
+  danger: "#ea2261",
+  dangerLight: "rgba(234, 34, 97, 0.12)",
+  info: "#533afd",
+  infoLight: "#ecebff",
 
   // Neutrals — light mode
-  background: "#f9fafb",
-  card: "#fff",
-  cardBorder: "#f3f4f6",
-  border: "#e5e7eb",
-  inputBorder: "#d1d5db",
-  text: "#111827",
-  textSecondary: "#374151",
-  textMuted: "#6b7280",
-  textPlaceholder: "#9ca3af",
+  background: "#ffffff",
+  card: "#ffffff",
+  cardBorder: "#e5edf5",
+  border: "#e5edf5",
+  inputBorder: "#e5edf5",
+  text: "#061b31",
+  textSecondary: "#273951",
+  textMuted: "#64748d",
+  textPlaceholder: "#64748d",
 
-  // Neutrals — dark mode
-  darkBackground: "#111827",
-  darkCard: "#1f2937",
-  darkCardBorder: "#374151",
-  darkBorder: "#374151",
-  darkInputBorder: "#4b5563",
-  darkText: "#f9fafb",
-  darkTextSecondary: "#e5e7eb",
-  darkTextMuted: "#9ca3af",
-  darkTextPlaceholder: "#6b7280",
+  // Neutrals — dark mode (blue undertone)
+  darkBackground: "#0d253d",
+  darkCard: "#1c1e54",
+  darkCardBorder: "#2e2b8c",
+  darkBorder: "#2e2b8c",
+  darkInputBorder: "#3d3a7a",
+  darkText: "#ffffff",
+  darkTextSecondary: "#e5edf5",
+  darkTextMuted: "#94a3b8",
+  darkTextPlaceholder: "#64748d",
 
   // Status pills
-  statusNew: "#6b7280",
-  statusActive: "#2563eb",
-  statusPending: "#d97706",
-  statusCompleted: "#059669",
-  statusRejected: "#dc2626",
+  statusNew: "#64748d",
+  statusActive: "#533afd",
+  statusPending: "#9b6829",
+  statusCompleted: "#15be53",
+  statusRejected: "#ea2261",
 
   white: "#fff",
   black: "#000",
@@ -54,15 +55,16 @@ export const colors = {
 
 // ── Per-product accent overrides ──────────────────────────────────────────
 
+/** Per-product keys preserved; all accents use Stripe Purple for a unified monorepo brand. */
 export const productColors = {
-  empireo: "#007AFF",
-  recruitment: "#2563eb",
-  eoe: "#2563eb",
-  lwe: "#7c3aed",
-  afterServices: "#0d9488",
-  egpn: "#f59e0b",
-  codnov: "#3b82f6",
-  empireDigital: "#2563eb",
+  empireo: "#533afd",
+  recruitment: "#533afd",
+  eoe: "#533afd",
+  lwe: "#533afd",
+  afterServices: "#533afd",
+  egpn: "#533afd",
+  codnov: "#533afd",
+  empireDigital: "#533afd",
 } as const;
 
 // ── Spacing ───────────────────────────────────────────────────────────────
@@ -236,38 +238,71 @@ export const appleColors = {
   secondaryBackground: "#F2F2F7",
 } as const;
 
+/** Blue-tinted elevation — Stripe shadow stack (`rgba(50,50,93,0.25)` family). */
 export const cardShadow: ViewStyle = {
-  shadowColor: "#000",
-  shadowOffset: { width: 0, height: 1 },
-  shadowOpacity: 0.08,
-  shadowRadius: 8,
-  elevation: 2,
+  shadowColor: "#32325d",
+  shadowOffset: { width: 0, height: 4 },
+  shadowOpacity: 0.22,
+  shadowRadius: 12,
+  elevation: 4,
 };
 
 // ── Premium Dark Palette ─────────────────────────────────────────────────
 
+/** OLED / premium dark shell — true black canvas, Stripe indigo surfaces + purple chrome. */
 export const premiumDark = {
   ...colors,
-  primary: "#007AFF",
+  primary: "#665efd",
+  primaryLight: "rgba(102, 94, 253, 0.22)",
+  primaryDark: "#533afd",
   background: "#000000",
-  card: "#1C1C1E",
-  cardBorder: "#2C2C2E",
-  border: "#38383A",
+  card: "#1c1e54",
+  cardBorder: "#2e2b8c",
+  border: "#2e2b8c",
+  inputBorder: "#3d3a7a",
   text: "#FFFFFF",
-  textSecondary: "#EBEBF5",
-  textMuted: "#8E8E93",
+  textSecondary: "#e5edf5",
+  textMuted: "#94a3b8",
 };
 
-// ── Premium Tab Bar Options ──────────────────────────────────────────────
+/** Links on near-black marketing bands — Stripe purple-mid for contrast on `#000`. */
+export const recruitmentMarketingLinkOnDark = "#665efd";
 
-export function premiumTabBarOptions(accentColor: string = "#007AFF") {
+/** Recruitment / employer apps — same Stripe tokens as the shared default (`colors`). */
+export const recruitmentTheme = {
+  ...colors,
+};
+
+/** Tab bar for recruitment-family apps (Stripe hairline border). */
+export function recruitmentPremiumTabBarOptions(accentColor: string = productColors.recruitment) {
   return {
     tabBarActiveTintColor: accentColor,
     tabBarInactiveTintColor: "#86868B",
     tabBarStyle: {
       backgroundColor: "#FFFFFF",
       borderTopWidth: 0.5,
-      borderTopColor: "#C6C6C8",
+      borderTopColor: "#e5edf5",
+      paddingBottom: 4,
+      height: 84,
+    } as ViewStyle,
+  };
+}
+
+/** LWE — alias of shared Stripe default. */
+export const lweTheme = {
+  ...colors,
+};
+
+// ── Premium Tab Bar Options ──────────────────────────────────────────────
+
+export function premiumTabBarOptions(accentColor: string = "#533afd") {
+  return {
+    tabBarActiveTintColor: accentColor,
+    tabBarInactiveTintColor: "#86868B",
+    tabBarStyle: {
+      backgroundColor: "#FFFFFF",
+      borderTopWidth: 0.5,
+      borderTopColor: "#e5edf5",
       paddingBottom: 4,
       height: 84,
     } as ViewStyle,

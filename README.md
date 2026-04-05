@@ -336,12 +336,14 @@ import { colors, spacing, radius, fontSizes, typography, commonStyles } from "@e
 Per-product accent overrides via `productColors`:
 
 ```ts
-productColors.empireo      // #2563eb
-productColors.eoe          // #2563eb
-productColors.lwe          // #7c3aed
-productColors.afterServices // #0d9488
-productColors.egpn         // #f59e0b
-productColors.codnov       // #3b82f6
+productColors.empireo       // #007AFF
+productColors.recruitment   // #0071e3 (Apple Blue)
+productColors.eoe           // #171717
+productColors.empireDigital // #0071e3 (Apple Blue)
+productColors.lwe           // #7c3aed
+productColors.afterServices // #ff385c
+productColors.egpn          // #f59e0b
+productColors.codnov        // #3b82f6
 ```
 
 ### Spacing

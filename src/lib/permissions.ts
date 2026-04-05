@@ -85,7 +85,14 @@ export async function requestPermission(
     case "camera": {
       const Camera = await getCameraModule();
       if (!Camera) return DENIED;
-      const result = await Camera.requestCameraPermissionsAsync();
+      const result = await (
+        Camera as typeof Camera & {
+          requestCameraPermissionsAsync: () => Promise<{
+            granted: boolean;
+            canAskAgain: boolean;
+          }>;
+        }
+      ).requestCameraPermissionsAsync();
       return {
         granted: result.granted,
         canAskAgain: result.canAskAgain,
@@ -136,7 +143,14 @@ export async function checkPermission(
     case "camera": {
       const Camera = await getCameraModule();
       if (!Camera) return DENIED;
-      const result = await Camera.getCameraPermissionsAsync();
+      const result = await (
+        Camera as typeof Camera & {
+          getCameraPermissionsAsync: () => Promise<{
+            granted: boolean;
+            canAskAgain: boolean;
+          }>;
+        }
+      ).getCameraPermissionsAsync();
       return {
         granted: result.granted,
         canAskAgain: result.canAskAgain,

@@ -1,5 +1,5 @@
 import { useRef, useEffect } from "react";
-import { Animated, type ViewStyle } from "react-native";
+import { Animated, type StyleProp, type ViewStyle } from "react-native";
 
 export interface FadeInViewProps {
   children: React.ReactNode;
@@ -10,7 +10,7 @@ export interface FadeInViewProps {
   /** Slide up distance in pixels (default 16) */
   slideUp?: number;
   /** Container style */
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
 }
 
 /**
