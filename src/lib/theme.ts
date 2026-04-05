@@ -55,15 +55,15 @@ export const colors = {
 
 // ── Per-product accent overrides ──────────────────────────────────────────
 
-/** Per-product keys preserved; all accents use Stripe Purple for a unified monorepo brand. */
+/** Per-product accent keys — each brand maps to its reference design-md palette. */
 export const productColors = {
   empireo: "#533afd",
   recruitment: "#533afd",
   eoe: "#533afd",
   lwe: "#533afd",
-  afterServices: "#533afd",
-  egpn: "#533afd",
-  codnov: "#533afd",
+  afterServices: "#ff385c", // Airbnb Rausch Red
+  egpn: "#00b9ff", // Wise Bright Blue
+  codnov: "#5e6ad2", // Linear Indigo
   empireDigital: "#533afd",
 } as const;
 
@@ -292,6 +292,82 @@ export function recruitmentPremiumTabBarOptions(accentColor: string = productCol
 export const lweTheme = {
   ...colors,
 };
+
+// ── Codnov — Linear light theme ──────────────────────────────────────────
+
+/**
+ * Codnov (developer / project-management) — Linear light palette.
+ * @see Shared/awesome-design-md-main/design-md/linear.app/DESIGN.md
+ */
+export const codnovTheme = {
+  ...colors,
+  primary: "#5e6ad2", // Linear indigo
+  primaryLight: "rgba(94, 106, 210, 0.12)",
+  primaryDark: "#4c5bc4",
+  background: "#ffffff",
+  card: "#ffffff",
+  cardBorder: "#e6e6e8",
+  border: "#e6e6e8",
+  inputBorder: "#d7d8db",
+  text: "#0c0d10", // Linear near-black ink
+  textSecondary: "#3c4149",
+  textMuted: "#6b6f76",
+  textPlaceholder: "#8a8f98",
+  info: "#5e6ad2",
+  infoLight: "rgba(94, 106, 210, 0.12)",
+} as const;
+
+// ── EGPN — Wise bright-blue theme ────────────────────────────────────────
+
+/**
+ * EGPN (global partner network, B2B) — Wise palette.
+ * @see Shared/awesome-design-md-main/design-md/wise/DESIGN.md
+ */
+export const egpnTheme = {
+  ...colors,
+  primary: "#00b9ff", // Wise bright blue
+  primaryLight: "rgba(0, 185, 255, 0.14)",
+  primaryDark: "#0099d6",
+  background: "#ffffff",
+  card: "#ffffff",
+  cardBorder: "#e2e5ea",
+  border: "#e2e5ea",
+  inputBorder: "#d1d5db",
+  text: "#0e1011",
+  textSecondary: "#2c3038",
+  textMuted: "#6f7787",
+  textPlaceholder: "#9ba3b0",
+  success: "#163300", // Wise dark green (brand accent)
+  successLight: "rgba(22, 51, 0, 0.12)",
+  info: "#00b9ff",
+  infoLight: "rgba(0, 185, 255, 0.14)",
+} as const;
+
+// ── After-Services — Airbnb Rausch theme ─────────────────────────────────
+
+/**
+ * Empire After Services (housing / post-arrival) — Airbnb palette.
+ * @see Shared/awesome-design-md-main/design-md/airbnb/DESIGN.md
+ */
+export const afterServicesTheme = {
+  ...colors,
+  primary: "#ff385c", // Airbnb Rausch Red
+  primaryLight: "rgba(255, 56, 92, 0.12)",
+  primaryDark: "#e00b41",
+  background: "#ffffff",
+  card: "#ffffff",
+  cardBorder: "#ebebeb",
+  border: "#dddddd", // Airbnb separator
+  inputBorder: "#b0b0b0",
+  text: "#222222", // Airbnb "Hof" ink
+  textSecondary: "#484848",
+  textMuted: "#717171", // Airbnb "Foggy"
+  textPlaceholder: "#b0b0b0",
+  danger: "#c13515", // Airbnb Arches
+  dangerLight: "rgba(193, 53, 21, 0.12)",
+  info: "#ff385c",
+  infoLight: "rgba(255, 56, 92, 0.12)",
+} as const;
 
 // ── Premium Tab Bar Options ──────────────────────────────────────────────
 
