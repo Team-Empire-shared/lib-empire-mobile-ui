@@ -164,3 +164,45 @@ export {
   RecruitmentMarketingHeader,
   type RecruitmentMarketingHeaderProps,
 } from "./components/RecruitmentMarketingHeader";
+
+// ── Tier 0.1 — Offline-First Engine ───────────────────────────────────
+export { offlineDb, OfflineDatabase } from "./offline-database";
+export { useOfflineQuery } from "./hooks/useOfflineQuery";
+export { useOptimisticMutation } from "./hooks/useOptimisticMutation";
+
+// ── Tier 0.2 — Real-Time Engine ───────────────────────────────────────
+export {
+  RealtimeClient,
+  type RealtimeEvent,
+  type PresenceUser,
+} from "./realtime/realtime-client";
+export { useRealtimeChannel, usePresence } from "./hooks/useRealtimeChannel";
+
+// ── Tier 0.4 — Design System ────────────────────────────────────────
+export {
+  dsSpacing,
+  dsRadius,
+  dsFontSize,
+  dsFontWeight,
+  dsLineHeight,
+  elevation,
+  springs,
+  duration,
+  palette,
+  lightTheme,
+  darkTheme,
+  type ThemeColors,
+} from "./design-system";
+export { useTheme, setThemeMode, type ThemeMode } from "./hooks/useTheme";
+
+// ── Tier 0.5 — Analytics Engine ─────────────────────────────────────
+export {
+  analyticsEngine,
+  AnalyticsEngine,
+  type AnalyticsConfig,
+  type UserProperties as AnalyticsUserProperties,
+  type EventProperties as AnalyticsEventProperties,
+  type ScreenViewEvent,
+  type AnalyticsProviderName,
+} from "./analytics/analytics-engine";
+export { useScreenTracking } from "./hooks/useScreenTracking";
