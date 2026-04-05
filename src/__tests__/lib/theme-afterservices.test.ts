@@ -1,4 +1,4 @@
-import { afterServicesTheme, productColors } from "../../lib/theme";
+import { afterServicesTheme, afterServicesDarkTheme, productColors } from "../../lib/theme";
 
 describe("Airbnb / After-Services theme tokens", () => {
   it("uses Airbnb Rausch Red for primary and After-Services product key", () => {
@@ -16,5 +16,10 @@ describe("Airbnb / After-Services theme tokens", () => {
 
   it("uses Airbnb Arches for danger states", () => {
     expect(afterServicesTheme.danger).toBe("#c13515");
+  });
+
+  it("provides a dark variant with Rausch Red primary on dark canvas", () => {
+    expect(afterServicesDarkTheme.primary).toBe("#ff385c");
+    expect(afterServicesDarkTheme.background).toBe("#000000");
   });
 });

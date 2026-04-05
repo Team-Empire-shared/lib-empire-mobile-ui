@@ -1,4 +1,4 @@
-import { codnovTheme, productColors } from "../../lib/theme";
+import { codnovTheme, codnovDarkTheme, productColors } from "../../lib/theme";
 
 describe("Linear / Codnov theme tokens", () => {
   it("uses Linear indigo for primary and Codnov product key", () => {
@@ -13,5 +13,12 @@ describe("Linear / Codnov theme tokens", () => {
 
   it("uses Linear hairline border", () => {
     expect(codnovTheme.border).toBe("#e6e6e8");
+  });
+
+  it("provides a Linear dark variant for native apps with shared indigo primary", () => {
+    expect(codnovDarkTheme.primary).toBe("#5e6ad2");
+    expect(codnovDarkTheme.background).toBe("#08090a");
+    expect(codnovDarkTheme.text).toBe("#f7f8f8");
+    expect(codnovDarkTheme.card).toBe("#1a1b1e");
   });
 });

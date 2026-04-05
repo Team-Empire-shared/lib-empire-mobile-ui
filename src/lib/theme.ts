@@ -317,6 +317,30 @@ export const codnovTheme = {
   infoLight: "rgba(94, 106, 210, 0.12)",
 } as const;
 
+/**
+ * Codnov mobile — Linear **dark** palette.
+ * Web / dashboard use the light `codnovTheme`; native apps stay dark to
+ * preserve the existing Codnov aesthetic.
+ * @see Shared/awesome-design-md-main/design-md/linear.app/DESIGN.md
+ */
+export const codnovDarkTheme = {
+  ...colors,
+  primary: "#5e6ad2",
+  primaryLight: "rgba(94, 106, 210, 0.22)",
+  primaryDark: "#4c5bc4",
+  background: "#08090a", // Linear deep canvas
+  card: "#1a1b1e",
+  cardBorder: "#26272b",
+  border: "#26272b",
+  inputBorder: "#2a2b2f",
+  text: "#f7f8f8",
+  textSecondary: "#d0d6e0",
+  textMuted: "#8a8f98",
+  textPlaceholder: "#62666d",
+  info: "#5e6ad2",
+  infoLight: "rgba(94, 106, 210, 0.22)",
+} as const;
+
 // ── EGPN — Wise bright-blue theme ────────────────────────────────────────
 
 /**
@@ -343,6 +367,20 @@ export const egpnTheme = {
   infoLight: "rgba(0, 185, 255, 0.14)",
 } as const;
 
+/**
+ * EGPN mobile — dark shell with Wise brand primary.
+ * Keeps the existing dark canvas of the EGPN apps while switching the
+ * accent to Wise bright blue for brand alignment.
+ */
+export const egpnDarkTheme = {
+  ...premiumDark,
+  primary: "#00b9ff",
+  primaryLight: "rgba(0, 185, 255, 0.22)",
+  primaryDark: "#0099d6",
+  info: "#00b9ff",
+  infoLight: "rgba(0, 185, 255, 0.22)",
+} as const;
+
 // ── After-Services — Airbnb Rausch theme ─────────────────────────────────
 
 /**
@@ -367,6 +405,22 @@ export const afterServicesTheme = {
   dangerLight: "rgba(193, 53, 21, 0.12)",
   info: "#ff385c",
   infoLight: "rgba(255, 56, 92, 0.12)",
+} as const;
+
+/**
+ * After-Services mobile — dark shell with Airbnb Rausch Red primary.
+ * Keeps existing dark canvas while aligning the accent with the
+ * after-services-web Airbnb brand.
+ */
+export const afterServicesDarkTheme = {
+  ...premiumDark,
+  primary: "#ff385c",
+  primaryLight: "rgba(255, 56, 92, 0.22)",
+  primaryDark: "#e00b41",
+  danger: "#c13515",
+  dangerLight: "rgba(193, 53, 21, 0.22)",
+  info: "#ff385c",
+  infoLight: "rgba(255, 56, 92, 0.22)",
 } as const;
 
 // ── Premium Tab Bar Options ──────────────────────────────────────────────
