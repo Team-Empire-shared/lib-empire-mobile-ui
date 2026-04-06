@@ -36,7 +36,6 @@ const consoleProvider: AnalyticsProvider = {
 // Mixpanel provider (lazy-loaded)
 // ---------------------------------------------------------------------------
 function createMixpanelProvider(): AnalyticsProvider {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let mixpanel: any = null;
 
   return {
@@ -71,7 +70,6 @@ function createMixpanelProvider(): AnalyticsProvider {
 // PostHog provider (lazy-loaded)
 // ---------------------------------------------------------------------------
 function createPostHogProvider(): AnalyticsProvider {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let posthog: any = null;
 
   return {
