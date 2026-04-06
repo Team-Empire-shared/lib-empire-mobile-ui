@@ -4,9 +4,9 @@
  */
 import { useRef } from 'react';
 import { useFocusEffect } from 'expo-router';
-import { analyticsEngine } from '../analytics/analytics-engine';
+import { analyticsEngine, type EventProperties } from '../analytics/analytics-engine';
 
-export function useScreenTracking(screenName: string, properties?: Record<string, unknown>) {
+export function useScreenTracking(screenName: string, properties?: EventProperties) {
   const tracked = useRef(false);
 
   useFocusEffect(() => {
