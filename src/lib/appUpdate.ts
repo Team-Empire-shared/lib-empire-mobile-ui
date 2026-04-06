@@ -1,5 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
+// Use require() instead of dynamic import() to avoid Metro async-require resolution issues
+// with shared local packages. Falls back gracefully if expo-updates is not installed.
+function getUpdates(): typeof import("expo-updates") | null {
+  try {
+    return require("expo-updates");
+  } catch {
+    return null;
+  }
+}
+
 export interface UpdateStatus {
   isAvailable: boolean;
   isDownloading: boolean;
@@ -23,7 +33,7 @@ export async function checkForUpdate(): Promise<{ available: boolean }> {
   if (__DEV__) return { available: false };
 
   try {
-    const Updates = await import("expo-updates");
+    const Updates = getUpdates();
     const result = await Updates.checkForUpdateAsync();
     return { available: result.isAvailable };
   } catch (err) {
@@ -40,7 +50,7 @@ export async function fetchAndApplyUpdate(): Promise<void> {
   if (__DEV__) return;
 
   try {
-    const Updates = await import("expo-updates");
+    const Updates = getUpdates();
     await Updates.fetchUpdateAsync();
     await Updates.reloadAsync();
   } catch (err) {
@@ -71,7 +81,7 @@ export function useAppUpdate(
     if (__DEV__) return;
 
     try {
-      const Updates = await import("expo-updates");
+      const Updates = getUpdates();
       const result = await Updates.checkForUpdateAsync();
       if (mountedRef.current) {
         setStatus((prev) => ({
@@ -89,7 +99,7 @@ export function useAppUpdate(
     if (__DEV__) return;
 
     try {
-      const Updates = await import("expo-updates");
+      const Updates = getUpdates();
       if (mountedRef.current) {
         setStatus((prev) => ({ ...prev, isDownloading: true }));
       }
