@@ -34,16 +34,18 @@ jobs:
         run: npm ci
 
       - name: ESLint check
-        run: npm run lint --if-present || true
+        run: npm run lint --if-present
 
       - name: TypeScript check
-        run: npm run type-check --if-present || true
+        run: npm run type-check --if-present
 
       - name: Format check (Prettier)
-        run: npm run format:check --if-present || true
+        continue-on-error: true
+        run: npm run format:check --if-present
 
       - name: Security audit
-        run: npm audit --audit-level=${{ env.NPM_AUDIT_LEVEL }} || true
+        continue-on-error: true
+        run: npm audit --audit-level=${{ env.NPM_AUDIT_LEVEL }}
 
       - name: Repo hygiene (no tracked node_modules)
         run: |
