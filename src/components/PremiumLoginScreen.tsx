@@ -36,6 +36,12 @@ export interface PremiumLoginScreenProps {
   onSignUp?: () => void;
   /** Optional forgot password handler */
   onForgotPassword?: () => void;
+  /** Google Sign-In handler — shows button when provided */
+  onGoogleSignIn?: () => void;
+  /** Apple Sign-In handler — shows button when provided (iOS only) */
+  onAppleSignIn?: () => void;
+  /** Whether a social login is currently in progress */
+  socialLoading?: "google" | "apple" | null;
   /** Override container style */
   style?: ViewStyle;
   /**
@@ -101,6 +107,9 @@ export function PremiumLoginScreen({
   onLogin,
   onSignUp,
   onForgotPassword,
+  onGoogleSignIn,
+  onAppleSignIn,
+  socialLoading,
   style,
   marketingBrand,
 }: PremiumLoginScreenProps) {
@@ -289,6 +298,74 @@ export function PremiumLoginScreen({
           <Text style={[shell.welcomeText, showMarketingHero && { marginTop: 24, marginBottom: 20 }]}>
             Sign in to continue
           </Text>
+
+          {/* Social Sign-In Buttons */}
+          {(onGoogleSignIn || (onAppleSignIn && Platform.OS === "ios")) && (
+            <View style={{ width: "100%", marginBottom: 16 }}>
+              {onAppleSignIn && Platform.OS === "ios" && (
+                <Pressable
+                  onPress={onAppleSignIn}
+                  disabled={loading || !!socialLoading}
+                  accessibilityRole="button"
+                  accessibilityLabel="Continue with Apple"
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: isLight ? "#000000" : "#ffffff",
+                    borderRadius: 14,
+                    paddingVertical: 14,
+                    marginBottom: onGoogleSignIn ? 10 : 0,
+                    opacity: socialLoading === "apple" ? 0.7 : 1,
+                  }}
+                >
+                  {socialLoading === "apple" ? (
+                    <ActivityIndicator size="small" color={isLight ? "#ffffff" : "#000000"} />
+                  ) : (
+                    <>
+                      <Text style={{ fontSize: 18, color: isLight ? "#ffffff" : "#000000", marginRight: 8 }}>{"\uF8FF"}</Text>
+                      <Text style={{ fontSize: 15, fontWeight: "600", color: isLight ? "#ffffff" : "#000000" }}>Continue with Apple</Text>
+                    </>
+                  )}
+                </Pressable>
+              )}
+              {onGoogleSignIn && (
+                <Pressable
+                  onPress={onGoogleSignIn}
+                  disabled={loading || !!socialLoading}
+                  accessibilityRole="button"
+                  accessibilityLabel="Continue with Google"
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: isLight ? "#ffffff" : "#1f1f2e",
+                    borderRadius: 14,
+                    paddingVertical: 14,
+                    borderWidth: 1,
+                    borderColor: isLight ? "#dadce0" : "#2e2e3e",
+                    opacity: socialLoading === "google" ? 0.7 : 1,
+                  }}
+                >
+                  {socialLoading === "google" ? (
+                    <ActivityIndicator size="small" color={isLight ? "#1a73e8" : "#8ab4f8"} />
+                  ) : (
+                    <>
+                      <Text style={{ fontSize: 18, fontWeight: "700", marginRight: 8 }}>
+                        <Text style={{ color: "#4285F4" }}>G</Text>
+                      </Text>
+                      <Text style={{ fontSize: 15, fontWeight: "600", color: isLight ? "#1f1f1f" : "#e8eaed" }}>Continue with Google</Text>
+                    </>
+                  )}
+                </Pressable>
+              )}
+              <View style={{ flexDirection: "row", alignItems: "center", marginTop: 16 }}>
+                <View style={{ flex: 1, height: 1, backgroundColor: isLight ? "#e5e7eb" : "#1e1e2a" }} />
+                <Text style={{ marginHorizontal: 12, fontSize: 12, color: isLight ? "#9ca3af" : "#6b7280" }}>or sign in with email</Text>
+                <View style={{ flex: 1, height: 1, backgroundColor: isLight ? "#e5e7eb" : "#1e1e2a" }} />
+              </View>
+            </View>
+          )}
 
           {/* Card */}
           <View
