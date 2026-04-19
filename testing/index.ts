@@ -88,6 +88,9 @@ export const mocks = {
     captureMessage: jest.fn(),
     addBreadcrumb: jest.fn(),
     setUser: jest.fn(),
+    setTag: jest.fn(),
+    setTags: jest.fn(),
+    setContext: jest.fn(),
     withScope: jest.fn((cb: (scope: unknown) => void) =>
       cb({ setExtras: jest.fn() }),
     ),
@@ -113,13 +116,33 @@ export const mocks = {
     SwipeableRow: () => null,
     FAB: () => null,
     StalenessBadge: () => null,
-    EmptyState: () => null,
+    EmptyState: ({ title, subtitle }: { title?: string; subtitle?: string; icon?: string }) => {
+      const RN = require("react-native");
+      const R = require("react");
+      return R.createElement(RN.View, null,
+        title ? R.createElement(RN.Text, null, title) : null,
+        subtitle ? R.createElement(RN.Text, null, subtitle) : null,
+      );
+    },
     OnboardingChecklist: () => null,
     ProfileCompleteness: () => null,
     FormTextInput: () => null,
     FormSelect: () => null,
     CachedImage: () => null,
     PremiumLoginScreen: () => null,
+    SearchBar: ({ value, onChangeText, placeholder }: { value?: string; onChangeText?: (v: string) => void; placeholder?: string }) => {
+      const RN = require("react-native");
+      const R = require("react");
+      return R.createElement(RN.TextInput, { value, onChangeText, placeholder: placeholder ?? "Search..." });
+    },
+    FilterChips: () => null,
+    SectionHeader: () => null,
+    StatusBadge: () => null,
+    ProgressBar: () => null,
+    Divider: () => null,
+    Tag: () => null,
+    Badge: () => null,
+    Pill: () => null,
 
     // Toast
     toast: { success: jest.fn(), error: jest.fn(), info: jest.fn(), warning: jest.fn() },
@@ -181,6 +204,25 @@ export const mocks = {
       screen: jest.fn(),
       identify: jest.fn(),
       reset: jest.fn(),
+    },
+
+    // Screen tracking
+    useScreenTracking: jest.fn(),
+    cardShadow: {},
+
+    // Theme tokens (product-specific)
+    codnovDarkTheme: {
+      primary: "#5e6ad2", primaryLight: "rgba(94,106,210,0.22)", primaryDark: "#4c5bc4",
+      background: "#08090a", card: "#1a1b1e", cardBorder: "#26272b", border: "#26272b",
+      inputBorder: "#2a2b2f", text: "#f7f8f8", textSecondary: "#d0d6e0",
+      textMuted: "#8a8f98", textPlaceholder: "#62666d", white: "#ffffff",
+      info: "#5e6ad2", infoLight: "rgba(94,106,210,0.22)",
+      success: "#4ade80", danger: "#f87171", warning: "#fbbf24",
+      overlay: "rgba(0,0,0,0.7)", tabBar: "#111118", tabBarBorder: "#2a2a38",
+    },
+    codnovTheme: {
+      primary: "#5e6ad2", background: "#ffffff", card: "#f8f9fc",
+      text: "#1a1b1e", textPlaceholder: "#9ca3af", white: "#ffffff",
     },
 
     // Hooks
