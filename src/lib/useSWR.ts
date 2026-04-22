@@ -119,7 +119,7 @@ export function useSWR<T>({
   useEffect(() => {
     if (autoFetch) fetchFresh();
     return () => { abortRef.current?.abort(); };
-  }, []);  // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);  // eslint-disable-line
 
   const refresh = useCallback(() => fetchFresh(true), [fetchFresh]);
 

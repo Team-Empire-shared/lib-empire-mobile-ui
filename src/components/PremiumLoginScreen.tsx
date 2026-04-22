@@ -36,6 +36,18 @@ export interface PremiumLoginScreenProps {
   onSignUp?: () => void;
   /** Optional forgot password handler */
   onForgotPassword?: () => void;
+  /** Google Sign-In handler — shows button when provided */
+  onGoogleSignIn?: () => void;
+  /** Apple Sign-In handler — shows button when provided (iOS only) */
+  onAppleSignIn?: () => void;
+  /** Facebook Sign-In handler — shows button when provided */
+  onFacebookSignIn?: () => void;
+  /** LinkedIn Sign-In handler — shows button when provided (EOE + Recruitment only) */
+  onLinkedInSignIn?: () => void;
+  /** GitHub Sign-In handler — shows button when provided (Codnov only) */
+  onGitHubSignIn?: () => void;
+  /** Whether a social login is currently in progress */
+  socialLoading?: "google" | "apple" | "facebook" | "linkedin" | "github" | null;
   /** Override container style */
   style?: ViewStyle;
   /**
@@ -101,6 +113,12 @@ export function PremiumLoginScreen({
   onLogin,
   onSignUp,
   onForgotPassword,
+  onGoogleSignIn,
+  onAppleSignIn,
+  onFacebookSignIn,
+  onLinkedInSignIn,
+  onGitHubSignIn,
+  socialLoading,
   style,
   marketingBrand,
 }: PremiumLoginScreenProps) {
@@ -289,6 +307,158 @@ export function PremiumLoginScreen({
           <Text style={[shell.welcomeText, showMarketingHero && { marginTop: 24, marginBottom: 20 }]}>
             Sign in to continue
           </Text>
+
+          {/* Social Sign-In Buttons */}
+          {(onGoogleSignIn ||
+            (onAppleSignIn && Platform.OS === "ios") ||
+            onFacebookSignIn ||
+            onLinkedInSignIn ||
+            onGitHubSignIn) && (
+            <View style={{ width: "100%", marginBottom: 16 }}>
+              {onAppleSignIn && Platform.OS === "ios" && (
+                <Pressable
+                  onPress={onAppleSignIn}
+                  disabled={loading || !!socialLoading}
+                  accessibilityRole="button"
+                  accessibilityLabel="Continue with Apple"
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: isLight ? "#000000" : "#ffffff",
+                    borderRadius: 14,
+                    paddingVertical: 14,
+                    marginBottom: onGoogleSignIn ? 10 : 0,
+                    opacity: socialLoading === "apple" ? 0.7 : 1,
+                  }}
+                >
+                  {socialLoading === "apple" ? (
+                    <ActivityIndicator size="small" color={isLight ? "#ffffff" : "#000000"} />
+                  ) : (
+                    <>
+                      <Text style={{ fontSize: 18, color: isLight ? "#ffffff" : "#000000", marginRight: 8 }}>{"\uF8FF"}</Text>
+                      <Text style={{ fontSize: 15, fontWeight: "600", color: isLight ? "#ffffff" : "#000000" }}>Continue with Apple</Text>
+                    </>
+                  )}
+                </Pressable>
+              )}
+              {onGoogleSignIn && (
+                <Pressable
+                  onPress={onGoogleSignIn}
+                  disabled={loading || !!socialLoading}
+                  accessibilityRole="button"
+                  accessibilityLabel="Continue with Google"
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: isLight ? "#ffffff" : "#1f1f2e",
+                    borderRadius: 14,
+                    paddingVertical: 14,
+                    borderWidth: 1,
+                    borderColor: isLight ? "#dadce0" : "#2e2e3e",
+                    marginBottom: (onFacebookSignIn || onLinkedInSignIn || onGitHubSignIn) ? 10 : 0,
+                    opacity: socialLoading === "google" ? 0.7 : 1,
+                  }}
+                >
+                  {socialLoading === "google" ? (
+                    <ActivityIndicator size="small" color={isLight ? "#1a73e8" : "#8ab4f8"} />
+                  ) : (
+                    <>
+                      <Text style={{ fontSize: 18, fontWeight: "700", marginRight: 8 }}>
+                        <Text style={{ color: "#4285F4" }}>G</Text>
+                      </Text>
+                      <Text style={{ fontSize: 15, fontWeight: "600", color: isLight ? "#1f1f1f" : "#e8eaed" }}>Continue with Google</Text>
+                    </>
+                  )}
+                </Pressable>
+              )}
+              {onFacebookSignIn && (
+                <Pressable
+                  onPress={onFacebookSignIn}
+                  disabled={loading || !!socialLoading}
+                  accessibilityRole="button"
+                  accessibilityLabel="Continue with Facebook"
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: "#1877F2",
+                    borderRadius: 14,
+                    paddingVertical: 14,
+                    marginBottom: (onLinkedInSignIn || onGitHubSignIn) ? 10 : 0,
+                    opacity: socialLoading === "facebook" ? 0.7 : 1,
+                  }}
+                >
+                  {socialLoading === "facebook" ? (
+                    <ActivityIndicator size="small" color="#ffffff" />
+                  ) : (
+                    <>
+                      <Text style={{ fontSize: 18, fontWeight: "700", color: "#ffffff", marginRight: 8 }}>f</Text>
+                      <Text style={{ fontSize: 15, fontWeight: "600", color: "#ffffff" }}>Continue with Facebook</Text>
+                    </>
+                  )}
+                </Pressable>
+              )}
+              {onLinkedInSignIn && (
+                <Pressable
+                  onPress={onLinkedInSignIn}
+                  disabled={loading || !!socialLoading}
+                  accessibilityRole="button"
+                  accessibilityLabel="Continue with LinkedIn"
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: "#0A66C2",
+                    borderRadius: 14,
+                    paddingVertical: 14,
+                    marginBottom: onGitHubSignIn ? 10 : 0,
+                    opacity: socialLoading === "linkedin" ? 0.7 : 1,
+                  }}
+                >
+                  {socialLoading === "linkedin" ? (
+                    <ActivityIndicator size="small" color="#ffffff" />
+                  ) : (
+                    <>
+                      <Text style={{ fontSize: 15, fontWeight: "700", color: "#ffffff", marginRight: 8 }}>in</Text>
+                      <Text style={{ fontSize: 15, fontWeight: "600", color: "#ffffff" }}>Continue with LinkedIn</Text>
+                    </>
+                  )}
+                </Pressable>
+              )}
+              {onGitHubSignIn && (
+                <Pressable
+                  onPress={onGitHubSignIn}
+                  disabled={loading || !!socialLoading}
+                  accessibilityRole="button"
+                  accessibilityLabel="Continue with GitHub"
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: "#24292F",
+                    borderRadius: 14,
+                    paddingVertical: 14,
+                    opacity: socialLoading === "github" ? 0.7 : 1,
+                  }}
+                >
+                  {socialLoading === "github" ? (
+                    <ActivityIndicator size="small" color="#ffffff" />
+                  ) : (
+                    <>
+                      <Text style={{ fontSize: 15, fontWeight: "600", color: "#ffffff" }}>Continue with GitHub</Text>
+                    </>
+                  )}
+                </Pressable>
+              )}
+              <View style={{ flexDirection: "row", alignItems: "center", marginTop: 16 }}>
+                <View style={{ flex: 1, height: 1, backgroundColor: isLight ? "#e5e7eb" : "#1e1e2a" }} />
+                <Text style={{ marginHorizontal: 12, fontSize: 12, color: isLight ? "#9ca3af" : "#6b7280" }}>or sign in with email</Text>
+                <View style={{ flex: 1, height: 1, backgroundColor: isLight ? "#e5e7eb" : "#1e1e2a" }} />
+              </View>
+            </View>
+          )}
 
           {/* Card */}
           <View
