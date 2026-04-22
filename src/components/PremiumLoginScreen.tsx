@@ -40,8 +40,14 @@ export interface PremiumLoginScreenProps {
   onGoogleSignIn?: () => void;
   /** Apple Sign-In handler — shows button when provided (iOS only) */
   onAppleSignIn?: () => void;
+  /** Facebook Sign-In handler — shows button when provided */
+  onFacebookSignIn?: () => void;
+  /** LinkedIn Sign-In handler — shows button when provided (EOE + Recruitment only) */
+  onLinkedInSignIn?: () => void;
+  /** GitHub Sign-In handler — shows button when provided (Codnov only) */
+  onGitHubSignIn?: () => void;
   /** Whether a social login is currently in progress */
-  socialLoading?: "google" | "apple" | null;
+  socialLoading?: "google" | "apple" | "facebook" | "linkedin" | "github" | null;
   /** Override container style */
   style?: ViewStyle;
   /**
@@ -109,6 +115,9 @@ export function PremiumLoginScreen({
   onForgotPassword,
   onGoogleSignIn,
   onAppleSignIn,
+  onFacebookSignIn,
+  onLinkedInSignIn,
+  onGitHubSignIn,
   socialLoading,
   style,
   marketingBrand,
@@ -300,7 +309,11 @@ export function PremiumLoginScreen({
           </Text>
 
           {/* Social Sign-In Buttons */}
-          {(onGoogleSignIn || (onAppleSignIn && Platform.OS === "ios")) && (
+          {(onGoogleSignIn ||
+            (onAppleSignIn && Platform.OS === "ios") ||
+            onFacebookSignIn ||
+            onLinkedInSignIn ||
+            onGitHubSignIn) && (
             <View style={{ width: "100%", marginBottom: 16 }}>
               {onAppleSignIn && Platform.OS === "ios" && (
                 <Pressable
@@ -344,6 +357,7 @@ export function PremiumLoginScreen({
                     paddingVertical: 14,
                     borderWidth: 1,
                     borderColor: isLight ? "#dadce0" : "#2e2e3e",
+                    marginBottom: (onFacebookSignIn || onLinkedInSignIn || onGitHubSignIn) ? 10 : 0,
                     opacity: socialLoading === "google" ? 0.7 : 1,
                   }}
                 >
@@ -355,6 +369,85 @@ export function PremiumLoginScreen({
                         <Text style={{ color: "#4285F4" }}>G</Text>
                       </Text>
                       <Text style={{ fontSize: 15, fontWeight: "600", color: isLight ? "#1f1f1f" : "#e8eaed" }}>Continue with Google</Text>
+                    </>
+                  )}
+                </Pressable>
+              )}
+              {onFacebookSignIn && (
+                <Pressable
+                  onPress={onFacebookSignIn}
+                  disabled={loading || !!socialLoading}
+                  accessibilityRole="button"
+                  accessibilityLabel="Continue with Facebook"
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: "#1877F2",
+                    borderRadius: 14,
+                    paddingVertical: 14,
+                    marginBottom: (onLinkedInSignIn || onGitHubSignIn) ? 10 : 0,
+                    opacity: socialLoading === "facebook" ? 0.7 : 1,
+                  }}
+                >
+                  {socialLoading === "facebook" ? (
+                    <ActivityIndicator size="small" color="#ffffff" />
+                  ) : (
+                    <>
+                      <Text style={{ fontSize: 18, fontWeight: "700", color: "#ffffff", marginRight: 8 }}>f</Text>
+                      <Text style={{ fontSize: 15, fontWeight: "600", color: "#ffffff" }}>Continue with Facebook</Text>
+                    </>
+                  )}
+                </Pressable>
+              )}
+              {onLinkedInSignIn && (
+                <Pressable
+                  onPress={onLinkedInSignIn}
+                  disabled={loading || !!socialLoading}
+                  accessibilityRole="button"
+                  accessibilityLabel="Continue with LinkedIn"
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: "#0A66C2",
+                    borderRadius: 14,
+                    paddingVertical: 14,
+                    marginBottom: onGitHubSignIn ? 10 : 0,
+                    opacity: socialLoading === "linkedin" ? 0.7 : 1,
+                  }}
+                >
+                  {socialLoading === "linkedin" ? (
+                    <ActivityIndicator size="small" color="#ffffff" />
+                  ) : (
+                    <>
+                      <Text style={{ fontSize: 15, fontWeight: "700", color: "#ffffff", marginRight: 8 }}>in</Text>
+                      <Text style={{ fontSize: 15, fontWeight: "600", color: "#ffffff" }}>Continue with LinkedIn</Text>
+                    </>
+                  )}
+                </Pressable>
+              )}
+              {onGitHubSignIn && (
+                <Pressable
+                  onPress={onGitHubSignIn}
+                  disabled={loading || !!socialLoading}
+                  accessibilityRole="button"
+                  accessibilityLabel="Continue with GitHub"
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: "#24292F",
+                    borderRadius: 14,
+                    paddingVertical: 14,
+                    opacity: socialLoading === "github" ? 0.7 : 1,
+                  }}
+                >
+                  {socialLoading === "github" ? (
+                    <ActivityIndicator size="small" color="#ffffff" />
+                  ) : (
+                    <>
+                      <Text style={{ fontSize: 15, fontWeight: "600", color: "#ffffff" }}>Continue with GitHub</Text>
                     </>
                   )}
                 </Pressable>
