@@ -5,7 +5,6 @@ const mockDir = "<rootDir>/src/__tests__/__mocks__";
 module.exports = {
   preset: "react-native",
   setupFiles: [
-    require.resolve("react-native/jest/setup.js"),
     "./src/__tests__/setup.ts",
   ],
   transform: sharedTransform,
