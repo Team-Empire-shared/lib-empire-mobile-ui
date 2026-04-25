@@ -55,6 +55,12 @@ export interface PremiumLoginScreenProps {
    * Only applies when `appearance` is `"light"`.
    */
   marketingBrand?: { prefix: string; accent: string };
+  /** Google Sign-In press handler — button is hidden when not provided */
+  onGoogleSignIn?: () => void;
+  /** Apple Sign-In press handler (iOS only) — button is hidden when not provided */
+  onAppleSignIn?: () => Promise<void>;
+  /** Which social provider is currently loading — shows spinner on that button */
+  socialLoading?: "google" | "apple" | null;
 }
 
 // ── Dark Input ───────────────────────────────────────────────────────────
@@ -121,6 +127,9 @@ export function PremiumLoginScreen({
   socialLoading,
   style,
   marketingBrand,
+  onGoogleSignIn,
+  onAppleSignIn,
+  socialLoading,
 }: PremiumLoginScreenProps) {
   const insets = useSafeAreaInsets();
   // Form state
@@ -553,6 +562,49 @@ export function PremiumLoginScreen({
                 </Text>
               </Animated.View>
             </Pressable>
+
+            {/* Social sign-in — Google + Apple */}
+            {(onGoogleSignIn || (Platform.OS === "ios" && onAppleSignIn)) && (
+              <>
+                <View style={shell.socialDivider}>
+                  <View style={shell.socialDividerLine} />
+                  <Text style={shell.socialDividerText}>or continue with</Text>
+                  <View style={shell.socialDividerLine} />
+                </View>
+
+                {onGoogleSignIn && (
+                  <Pressable
+                    onPress={onGoogleSignIn}
+                    disabled={loading || !!socialLoading}
+                    style={[shell.socialButton, (loading || !!socialLoading) && { opacity: 0.55 }]}
+                    accessibilityLabel="Sign in with Google"
+                    accessibilityRole="button"
+                  >
+                    {socialLoading === "google" ? (
+                      <ActivityIndicator size="small" color={isLight ? "#374151" : "#9ca3af"} />
+                    ) : (
+                      <Text style={shell.socialButtonText}>Continue with Google</Text>
+                    )}
+                  </Pressable>
+                )}
+
+                {Platform.OS === "ios" && onAppleSignIn && (
+                  <Pressable
+                    onPress={onAppleSignIn}
+                    disabled={loading || !!socialLoading}
+                    style={[shell.appleButton, (loading || !!socialLoading) && { opacity: 0.55 }]}
+                    accessibilityLabel="Sign in with Apple"
+                    accessibilityRole="button"
+                  >
+                    {socialLoading === "apple" ? (
+                      <ActivityIndicator size="small" color="#fff" />
+                    ) : (
+                      <Text style={s.appleButtonText}>Continue with Apple</Text>
+                    )}
+                  </Pressable>
+                )}
+              </>
+            )}
           </View>
 
           {/* Sign up link */}
@@ -741,6 +793,55 @@ const s = StyleSheet.create({
     fontWeight: "600",
   },
 
+  // Social sign-in
+  socialDivider: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 20,
+    marginBottom: 4,
+  },
+  socialDividerLine: {
+    flex: 1,
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: "#1e1e2a",
+  },
+  socialDividerText: {
+    color: "#4b5563",
+    fontSize: 12,
+    marginHorizontal: 12,
+    fontWeight: "500",
+  },
+  socialButton: {
+    borderRadius: 14,
+    paddingVertical: 14,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    borderWidth: 1,
+    borderColor: "#1e1e2a",
+    backgroundColor: "#0d0d14",
+    marginTop: 10,
+  },
+  socialButtonText: {
+    color: "#d1d5db",
+    fontSize: 14,
+    fontWeight: "600",
+  },
+  appleButton: {
+    borderRadius: 14,
+    paddingVertical: 14,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    backgroundColor: "#000000",
+    marginTop: 10,
+  },
+  appleButtonText: {
+    color: "#ffffff",
+    fontSize: 14,
+    fontWeight: "600",
+  },
+
   // Branding
   brandingText: {
     color: "#374151",
@@ -898,6 +999,51 @@ const sLight = StyleSheet.create({
     fontSize: 14,
     fontWeight: "600",
   },
+
+  // Social sign-in
+  socialDivider: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 20,
+    marginBottom: 4,
+  },
+  socialDividerLine: {
+    flex: 1,
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: "#e5e7eb",
+  },
+  socialDividerText: {
+    color: "#9ca3af",
+    fontSize: 12,
+    marginHorizontal: 12,
+    fontWeight: "500",
+  },
+  socialButton: {
+    borderRadius: 14,
+    paddingVertical: 14,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    borderWidth: 1,
+    borderColor: "#e5e7eb",
+    backgroundColor: "#f9fafb",
+    marginTop: 10,
+  },
+  socialButtonText: {
+    color: "#374151",
+    fontSize: 14,
+    fontWeight: "600",
+  },
+  appleButton: {
+    borderRadius: 14,
+    paddingVertical: 14,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    backgroundColor: "#000000",
+    marginTop: 10,
+  },
+
   brandingText: {
     color: rt.textPlaceholder,
     fontSize: 11,
