@@ -16,6 +16,10 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
+
+permissions:
+  contents: read
+
 jobs:
   lint:
     uses: ./.github/workflows/shared-lint-node.yml
@@ -45,6 +49,7 @@ jobs:
   ci-passed:
     if: always()
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: [lint, test, build]
     steps:
       - name: Check results

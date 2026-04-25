@@ -10,6 +10,10 @@ on:
         type: string
         default: "."
 
+
+permissions:
+  contents: read
+
 env:
   NPM_AUDIT_LEVEL: "moderate"
 
