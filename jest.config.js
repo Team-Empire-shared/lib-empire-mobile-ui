@@ -3,7 +3,7 @@ const { sharedTransform, sharedTransformIgnore } = require("./jest.config.base")
 const mockDir = "<rootDir>/src/__tests__/__mocks__";
 
 module.exports = {
-  preset: "react-native",
+  preset: "@react-native/jest-preset",
   setupFiles: [
     "./src/__tests__/setup.ts",
   ],
