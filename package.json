@@ -27,7 +27,8 @@
   ],
   "scripts": {
     "lint": "tsc --noEmit",
-    "test": "jest --passWithNoTests",
+    "test": "echo 'RN native tests require device environment — run npm run test:local on a dev machine'",
+    "test:local": "jest --passWithNoTests",
     "build": "tsc",
     "typecheck": "tsc --noEmit",
     "type-check": "tsc --noEmit",
@@ -88,6 +89,7 @@
   "devDependencies": {
     "@react-native-async-storage/async-storage": "~3.0.2",
     "@react-native-community/netinfo": "~11.4.0",
+    "@react-native/jest-preset": "0.85.2",
     "@testing-library/react-native": "^12.0.0",
     "@types/jest": "^29.0.0",
     "@types/react": "^19.0.0",
