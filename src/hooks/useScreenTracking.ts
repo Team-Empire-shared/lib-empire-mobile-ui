@@ -1,17 +1,13 @@
-/**
- * Hook to automatically track screen view duration.
- * Use in every screen component.
- */
 import { useRef } from 'react';
 import { useFocusEffect } from 'expo-router';
-import { analyticsEngine, type EventProperties } from '../analytics/analytics-engine';
+import analytics, { type EventProperties } from '../lib/analytics';
 
 export function useScreenTracking(screenName: string, properties?: EventProperties) {
   const tracked = useRef(false);
 
   useFocusEffect(() => {
     if (!tracked.current) {
-      analyticsEngine.screen(screenName, properties);
+      analytics.screen(screenName, properties);
       tracked.current = true;
     }
     return () => {

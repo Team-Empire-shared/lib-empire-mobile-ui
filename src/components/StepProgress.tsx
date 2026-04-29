@@ -2,30 +2,15 @@ import { useEffect, useRef } from "react";
 import { View, Text, Animated, type ViewStyle } from "react-native";
 
 export interface StepProgressProps {
-  /** Step labels */
   steps: string[];
-  /** Current step index (0-based) */
   currentStep: number;
-  /** Completed step circle color (default #2563eb) */
   completedColor?: string;
-  /** Active step circle color (default #2563eb) */
   activeColor?: string;
-  /** Inactive color (default #d1d5db) */
   inactiveColor?: string;
-  /** Circle diameter (default 32) */
   circleSize?: number;
-  /** Container style */
   style?: ViewStyle;
 }
 
-/**
- * Horizontal step progress indicator with numbered circles connected by lines.
- * Completed steps show a check mark, current step pulses.
- *
- * ```tsx
- * <StepProgress steps={["Apply", "Review", "Interview", "Offer"]} currentStep={1} />
- * ```
- */
 export function StepProgress({
   steps,
   currentStep,
@@ -73,7 +58,7 @@ export function StepProgress({
             }}
           >
             {isCompleted ? (
-              <Text style={{ color: "#fff", fontSize: circleSize * 0.45, fontWeight: "700" }}>{"\u2713"}</Text>
+              <Text style={{ color: "#fff", fontSize: circleSize * 0.45, fontWeight: "700" }}>{"✓"}</Text>
             ) : (
               <Text style={{ color: isCurrent ? "#fff" : "#6b7280", fontSize: circleSize * 0.4, fontWeight: "600" }}>
                 {idx + 1}
@@ -85,7 +70,6 @@ export function StepProgress({
         return (
           <View key={idx} style={{ flex: isLast ? 0 : 1, alignItems: "center" }}>
             <View style={{ flexDirection: "row", alignItems: "center", width: "100%" }}>
-              {/* Circle — wrap in Animated if current */}
               <View style={{ alignItems: "center" }}>
                 {isCurrent ? (
                   <Animated.View style={{ transform: [{ scale: pulseAnim }] }}>
@@ -95,8 +79,6 @@ export function StepProgress({
                   circle
                 )}
               </View>
-
-              {/* Connector line */}
               {!isLast && (
                 <View
                   style={{
@@ -108,8 +90,6 @@ export function StepProgress({
                 />
               )}
             </View>
-
-            {/* Label */}
             <Text
               numberOfLines={2}
               style={{
