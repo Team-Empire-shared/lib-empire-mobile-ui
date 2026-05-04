@@ -19,16 +19,19 @@ concurrency:
 
 permissions:
   contents: read
+  packages: read
 
 jobs:
   lint:
     uses: ./.github/workflows/shared-lint-node.yml
+    secrets: inherit
     with:
       node-version: "20"
 
   test:
     needs: lint
     uses: ./.github/workflows/shared-test-node.yml
+    secrets: inherit
     with:
       node-version: "20"
       test-command: "npm test"
