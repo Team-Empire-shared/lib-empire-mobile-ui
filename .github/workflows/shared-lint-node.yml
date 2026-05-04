@@ -1,4 +1,4 @@
-﻿name: Shared Lint (Node.js)
+name: Shared Lint (Node.js)
 
 on:
   workflow_call:
@@ -39,8 +39,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
         env:
-          # github.token gets packages:read from the permissions block above.
-          # No custom PAT needed â€” works for all @team-empire-shared and @empireoe packages.
           NODE_AUTH_TOKEN: ${{ github.token }}
 
       - name: ESLint check
