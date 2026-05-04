@@ -153,9 +153,5 @@ export {
 } from "./lib/permissions";
 export { useCamera, type UseCameraResult } from "./lib/useCamera";
 export { usePhotos, type UsePhotosResult } from "./lib/usePhotos";
-export {
-  PremiumLoginScreen,
-  type PremiumLoginScreenProps,
-} from "./components/PremiumLoginScreen";
 export { StepProgress, type StepProgressProps } from "./components/StepProgress";
 export { useScreenTracking } from "./hooks/useScreenTracking";
