@@ -1,4 +1,4 @@
-﻿name: Shared Lint (Node.js)
+name: Shared Lint (Node.js)
 
 on:
   workflow_call:
@@ -27,10 +27,10 @@ jobs:
         working-directory: ${{ inputs.working-directory }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ inputs.node-version }}
           cache: npm
@@ -39,8 +39,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
         env:
-          # github.token gets packages:read from the permissions block above.
-          # No custom PAT needed â€” works for all @team-empire-shared and @empireoe packages.
           NODE_AUTH_TOKEN: ${{ github.token }}
 
       - name: ESLint check

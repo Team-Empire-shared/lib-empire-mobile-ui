@@ -37,10 +37,6 @@ export { FormTextInput, type FormTextInputProps } from "./components/FormTextInp
 export { FormSelect, type FormSelectProps, type SelectOption } from "./components/FormSelect";
 export { CachedImage, type CachedImageProps } from "./components/CachedImage";
 export {
-  PremiumLoginScreen,
-  type PremiumLoginScreenProps,
-} from "./components/PremiumLoginScreen";
-export {
   RecruitmentMarketingHeader,
   type RecruitmentMarketingHeaderProps,
 } from "./components/RecruitmentMarketingHeader";

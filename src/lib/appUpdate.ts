@@ -1,5 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
+// Use require() instead of dynamic import() to avoid Metro async-require resolution issues
+// with shared local packages. Falls back gracefully if expo-updates is not installed.
+function getUpdates(): typeof import("expo-updates") | null {
+  try {
+    return require("expo-updates");
+  } catch {
+    return null;
+  }
+}
+
 export interface UpdateStatus {
   isAvailable: boolean;
   isDownloading: boolean;
@@ -23,8 +33,10 @@ export async function checkForUpdate(): Promise<{ available: boolean }> {
   if (__DEV__) return { available: false };
 
   try {
-    const Updates = await import("expo-updates");
-    const result = await Updates.checkForUpdateAsync();
+    const Updates = getUpdates();
+    if (!Updates) return { available: false };
+    const u = Updates;
+    const result = await u.checkForUpdateAsync();
     return { available: result.isAvailable };
   } catch (err) {
     if (__DEV__) console.warn("[AppUpdate] checkForUpdate failed:", err);
@@ -40,9 +52,11 @@ export async function fetchAndApplyUpdate(): Promise<void> {
   if (__DEV__) return;
 
   try {
-    const Updates = await import("expo-updates");
-    await Updates.fetchUpdateAsync();
-    await Updates.reloadAsync();
+    const Updates = getUpdates();
+    if (!Updates) return;
+    const u = Updates;
+    await u.fetchUpdateAsync();
+    await u.reloadAsync();
   } catch (err) {
     if (__DEV__) console.warn("[AppUpdate] fetchAndApplyUpdate failed:", err);
     // Swallow — never crash the app for update failures
@@ -71,8 +85,10 @@ export function useAppUpdate(
     if (__DEV__) return;
 
     try {
-      const Updates = await import("expo-updates");
-      const result = await Updates.checkForUpdateAsync();
+      const Updates = getUpdates();
+      if (!Updates) return;
+      const u = Updates;
+      const result = await u.checkForUpdateAsync();
       if (mountedRef.current) {
         setStatus((prev) => ({
           ...prev,
@@ -89,15 +105,17 @@ export function useAppUpdate(
     if (__DEV__) return;
 
     try {
-      const Updates = await import("expo-updates");
+      const Updates = getUpdates();
+      if (!Updates) return;
+      const u = Updates;
       if (mountedRef.current) {
         setStatus((prev) => ({ ...prev, isDownloading: true }));
       }
-      await Updates.fetchUpdateAsync();
+      await u.fetchUpdateAsync();
       if (mountedRef.current) {
         setStatus((prev) => ({ ...prev, isDownloading: false, isReady: true }));
       }
-      await Updates.reloadAsync();
+      await u.reloadAsync();
     } catch (err) {
       if (mountedRef.current) {
         setStatus((prev) => ({ ...prev, isDownloading: false }));

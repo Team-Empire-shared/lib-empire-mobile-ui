@@ -116,12 +116,13 @@ export const mocks = {
     SwipeableRow: () => null,
     FAB: () => null,
     StalenessBadge: () => null,
-    EmptyState: ({ title, subtitle }: { title?: string; subtitle?: string; icon?: string }) => {
+    EmptyState: ({ title, subtitle, message }: { title?: string; subtitle?: string; message?: string; icon?: string }) => {
       const RN = require("react-native");
       const R = require("react");
       return R.createElement(RN.View, null,
         title ? R.createElement(RN.Text, null, title) : null,
         subtitle ? R.createElement(RN.Text, null, subtitle) : null,
+        message ? R.createElement(RN.Text, null, message) : null,
       );
     },
     OnboardingChecklist: () => null,
@@ -130,12 +131,13 @@ export const mocks = {
     FormSelect: () => null,
     CachedImage: () => null,
     PremiumLoginScreen: () => null,
-    SearchBar: ({ value, onChangeText, placeholder }: { value?: string; onChangeText?: (v: string) => void; placeholder?: string }) => {
+    SearchBar: ({ value, onSearch, placeholder }: { value?: string; onSearch?: (v: string) => void; placeholder?: string }) => {
       const RN = require("react-native");
       const R = require("react");
-      return R.createElement(RN.TextInput, { value, onChangeText, placeholder: placeholder ?? "Search..." });
+      return R.createElement(RN.TextInput, { value, onChangeText: onSearch, placeholder: placeholder ?? "Search..." });
     },
     FilterChips: () => null,
+    MetricCard: () => null,
     SectionHeader: () => null,
     StatusBadge: () => null,
     ProgressBar: () => null,

@@ -2,15 +2,26 @@ const { sharedTransform, sharedTransformIgnore } = require("./jest.config.base")
 
 const mockDir = "<rootDir>/src/__tests__/__mocks__";
 
+const rntlPreset = require("@testing-library/react-native/jest-preset");
+
 module.exports = {
-  preset: "@react-native/jest-preset",
+  ...rntlPreset,
   setupFiles: [
+    ...rntlPreset.setupFiles,
     "./src/__tests__/setup.ts",
   ],
-  transform: sharedTransform,
+  transform: {
+    ...sharedTransform,
+    "^.+\\.(bmp|gif|jpg|jpeg|mp4|png|psd|svg|webp)$": require.resolve(
+      "react-native/jest/assetFileTransformer.js",
+    ),
+  },
   transformIgnorePatterns: sharedTransformIgnore,
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
+    // RN 0.85 ViewConfigIgnore.js uses Flow 'const T' variance syntax that
+    // Babel can't parse — stub the entire module regardless of import path.
+    ".*ViewConfigIgnore.*": `${mockDir}/react-native-view-config-ignore.ts`,
     "^expo-image$": `${mockDir}/expo-image.ts`,
     "^expo-haptics$": `${mockDir}/expo-haptics.ts`,
     "^expo-updates$": `${mockDir}/expo-updates.ts`,
@@ -28,6 +39,8 @@ module.exports = {
     "^@react-native-async-storage/async-storage$": `${mockDir}/@react-native-async-storage/async-storage.ts`,
   },
   testMatch: ["<rootDir>/src/__tests__/**/*.test.{ts,tsx}"],
+  modulePathIgnorePatterns: ["<rootDir>/dist/"],
+  testPathIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/dist/"],
   collectCoverageFrom: [
     "src/**/*.{ts,tsx}",
     "!src/**/*.d.ts",
