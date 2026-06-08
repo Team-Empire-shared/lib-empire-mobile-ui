@@ -3,7 +3,7 @@
  * Each app gets its own database. Data is stored with TTL and version.
  * Works alongside the existing action queue (which handles mutations).
  */
-// @ts-expect-error – expo-sqlite is a peer dependency not installed in this project
+// @ts-ignore – expo-sqlite is a peer dependency that may not be installed in consumer projects
 import * as SQLite from "expo-sqlite";
 
 interface CachedRecord {

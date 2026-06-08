@@ -59,7 +59,8 @@
     "lint": "tsc --noEmit",
     "test": "echo 'RN native tests require device environment — run npm run test:local on a dev machine'",
     "test:local": "jest --passWithNoTests",
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json",
+    "prepare": "npm run build",
     "typecheck": "tsc --noEmit",
     "type-check": "tsc --noEmit",
     "format:check": "prettier --check ."
