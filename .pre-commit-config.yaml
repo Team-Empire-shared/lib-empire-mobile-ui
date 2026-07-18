@@ -1,0 +1,11 @@
+# ADR-028 secret-scanning baseline. Install once with: pre-commit install
+# Mirrors the reference set used by bos-api / recruitment-api.
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.21.2
+    hooks:
+      - id: gitleaks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: detect-private-key

@@ -1,3 +1,4 @@
+// @ts-ignore – expo-local-authentication is a peer dependency that may not be installed in consumer projects
 import * as LocalAuthentication from "expo-local-authentication";
 import { AppState, type AppStateStatus } from "react-native";
 import { getItem } from "./storage";

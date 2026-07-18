@@ -36,12 +36,18 @@ export interface PremiumLoginScreenProps {
   onSignUp?: () => void;
   /** Optional forgot password handler */
   onForgotPassword?: () => void;
+  /** Google Sign-In handler — shows button when provided */
+  onGoogleSignIn?: () => void;
+  /** Apple Sign-In handler — shows button when provided (iOS only) */
+  onAppleSignIn?: () => void;
   /** Facebook Sign-In handler — shows button when provided */
   onFacebookSignIn?: () => void;
   /** LinkedIn Sign-In handler — shows button when provided (EOE + Recruitment only) */
   onLinkedInSignIn?: () => void;
   /** GitHub Sign-In handler — shows button when provided (Codnov only) */
   onGitHubSignIn?: () => void;
+  /** Whether a social login is currently in progress */
+  socialLoading?: "google" | "apple" | "facebook" | "linkedin" | "github" | null;
   /** Override container style */
   style?: ViewStyle;
   /**
@@ -49,12 +55,6 @@ export interface PremiumLoginScreenProps {
    * Only applies when `appearance` is `"light"`.
    */
   marketingBrand?: { prefix: string; accent: string };
-  /** Google Sign-In press handler — button is hidden when not provided */
-  onGoogleSignIn?: () => void;
-  /** Apple Sign-In press handler (iOS only) — button is hidden when not provided */
-  onAppleSignIn?: () => Promise<void>;
-  /** Which social provider is currently loading — shows spinner on that button */
-  socialLoading?: "google" | "apple" | "facebook" | "linkedin" | "github" | null;
 }
 
 // ── Dark Input ───────────────────────────────────────────────────────────

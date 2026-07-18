@@ -59,7 +59,8 @@
     "lint": "tsc --noEmit",
     "test": "echo 'RN native tests require device environment — run npm run test:local on a dev machine'",
     "test:local": "jest --passWithNoTests",
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json",
+    "prepare": "npm run build",
     "typecheck": "tsc --noEmit",
     "type-check": "tsc --noEmit",
     "format:check": "prettier --check ."
@@ -141,6 +142,7 @@
     "jest": "^30.4.2",
     "react": "^19.0.0",
     "react-native": "0.85.2",
+    "react-native-safe-area-context": "^5.4.0",
     "react-test-renderer": "^19.0.0",
     "typescript": "^5.7.0",
     "zustand": "^5.0.0"

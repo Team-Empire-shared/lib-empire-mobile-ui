@@ -125,7 +125,7 @@ class AnalyticsEngine {
   funnelComplete(funnelName: string): void {
     const steps = this.funnels.get(funnelName);
     if (steps) {
-      const totalMs = Date.now() - steps[0].timestamp;
+      const totalMs = Date.now() - steps[0]!.timestamp;
       this.log('funnel_complete', {
         funnel: funnelName,
         total_steps: steps.length,

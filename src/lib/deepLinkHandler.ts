@@ -116,7 +116,7 @@ export function createDeepLinkHandler(routeMap: RouteMap): DeepLinkHandler {
         if (match) {
           const params: Record<string, string> = {};
           paramNames.forEach((name, i) => {
-            params[name] = decodeURIComponent(match[i + 1]);
+            params[name] = decodeURIComponent(match[i + 1] ?? "");
           });
           return { screen, params };
         }
