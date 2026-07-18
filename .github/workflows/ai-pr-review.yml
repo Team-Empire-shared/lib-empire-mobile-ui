@@ -1,0 +1,64 @@
+# AI PR review (pilot) — advisory comments from Claude on each PR.
+#
+# COST-SAFE BY DEFAULT: the job is gated behind the repo variable
+# AI_REVIEW_ENABLED. Until you set that variable to "true" AND add the
+# ANTHROPIC_API_KEY secret, this workflow is a no-op (the job is skipped — no
+# Actions minutes, no API spend, no red checks). To enable:
+#   gh variable set AI_REVIEW_ENABLED -b true   --repo <repo>
+#   gh secret   set ANTHROPIC_API_KEY -b <key>  --repo <repo>   # use a DEDICATED, budget-capped key
+#
+# Cost controls baked in: triggers only on PR open/ready (not every push),
+# skips drafts + bots + large diffs, Haiku model, capped turns + per-PR budget,
+# 10-min timeout, and cancels superseded runs. Note: it posts COMMENTS, not an
+# approving review — it does not replace the required human approval.
+name: AI PR Review
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: write
+  id-token: write   # required by anthropics/claude-code-action@v1 (OIDC -> Claude GitHub App token)
+
+concurrency:
+  group: ai-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    if: >-
+      vars.AI_REVIEW_ENABLED == 'true'
+      && github.event.pull_request.draft == false
+      && github.actor != 'dependabot[bot]'
+      && github.actor != 'renovate[bot]'
+    runs-on: ubuntu-latest   # switch to [self-hosted] once a runner is provisioned -> ~free minutes
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Skip very large PRs (cost guard)
+        id: size
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          ADD=$(gh pr view "${{ github.event.pull_request.number }}" --repo "$GITHUB_REPOSITORY" --json additions -q .additions)
+          echo "skip=$([ "${ADD:-0}" -gt 1500 ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+
+      - name: Claude review
+        if: steps.size.outputs.skip == 'false'
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            Review this pull request as a senior engineer for the Empire backend fleet.
+            Prioritise, in order: (1) tenant isolation (every query filters organization_id),
+            (2) authz/RBAC on mutating routes, (3) secrets/SSRF/injection, (4) correctness bugs.
+            Post concise, actionable inline comments. Lead with anything CRITICAL. Be brief;
+            do not nitpick style. If nothing material, say so in one line.
+          claude_args: |
+            --model claude-haiku-4-5-20251001
+            --max-turns 4
+            --max-budget-usd 1.50
