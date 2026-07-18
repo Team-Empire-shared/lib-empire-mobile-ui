@@ -99,6 +99,7 @@ export function CountdownTimer({
       return () => animation.stop();
     } else {
       pulseAnim.setValue(1);
+      return undefined;
     }
   }, [isUrgent, pulseAnim]);
 

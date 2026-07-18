@@ -48,6 +48,7 @@ export function SyncIndicator({
       return () => animation.stop();
     } else {
       rotation.setValue(0);
+      return undefined;
     }
   }, [status, rotation]);
 

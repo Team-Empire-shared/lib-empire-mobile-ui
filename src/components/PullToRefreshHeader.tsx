@@ -56,6 +56,7 @@ export function PullToRefreshHeader({
       return () => animation.stop();
     } else {
       rotation.setValue(0);
+      return undefined;
     }
   }, [refreshing, rotation]);
 

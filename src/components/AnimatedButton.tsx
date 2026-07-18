@@ -48,7 +48,7 @@ export function AnimatedButton({
   variant = "primary",
 }: AnimatedButtonProps) {
   const scale = useRef(new Animated.Value(1)).current;
-  const v = VARIANTS[variant] ?? VARIANTS.primary;
+  const v = (VARIANTS[variant] ?? VARIANTS.primary)!;
 
   const handlePressIn = useCallback(() => {
     if (disabled || loading) return;
