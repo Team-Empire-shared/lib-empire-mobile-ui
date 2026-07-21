@@ -63,12 +63,24 @@ export function createDeepLinkHandler(routeMap: RouteMap): DeepLinkHandler {
       const routePattern = routeMap[screen];
       if (!routePattern) return null;
 
-      // Replace [param] placeholders with values from data
+      // Replace [param] placeholders with values from data.
+      // Reject any segment that contains "/" or ".." (path traversal) before
+      // interpolating, then encode it, so an attacker-influenced push payload
+      // cannot inject extra path segments (e.g. id="5/../admin").
+      let rejected = false;
       const route = routePattern.replace(/\[(\w+)\]/g, (_match, param) => {
         // Check data.id first (common convention), then data[param]
         const value = param === "id" ? (data.id ?? data[param]) : data[param];
-        return value != null ? String(value) : "";
+        if (value == null) return "";
+        const str = String(value);
+        if (str.includes("/") || str.includes("..")) {
+          rejected = true;
+          return "";
+        }
+        return encodeURIComponent(str);
       });
+
+      if (rejected) return null;
 
       // If any placeholder was not resolved (empty string remained), return null
       if (route.includes("//" ) || route.endsWith("/")) {

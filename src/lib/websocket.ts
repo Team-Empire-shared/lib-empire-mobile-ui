@@ -51,14 +51,13 @@ export class EmpireWebSocket {
     if (!token) return;
 
     const baseUrl = this.config.apiUrl.replace(/\/api\/v1$/, "");
-    const wsUrl =
-      baseUrl.replace(/^http/, "ws") +
-      this.config.wsPath +
-      "?token=" +
-      encodeURIComponent(token);
+    const wsUrl = baseUrl.replace(/^http/, "ws") + this.config.wsPath;
 
     try {
-      this.ws = new WebSocket(wsUrl);
+      // Pass the auth token via the WebSocket subprotocol (Sec-WebSocket-Protocol)
+      // instead of the URL query string, so it is not captured in proxy/LB/APM
+      // access logs. Mirrors the secure pattern in realtime/realtime-client.ts.
+      this.ws = new WebSocket(wsUrl, [`token.${token}`]);
       this.intentionalClose = false;
 
       this.ws.onopen = () => {
