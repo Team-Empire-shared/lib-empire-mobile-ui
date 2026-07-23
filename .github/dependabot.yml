@@ -10,6 +10,13 @@ updates:
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-patch"]
+      # eslint 10 breaks the Next.js lint stack: eslint-config-next@15
+      # peer-rejects it (npm ERESOLVE kills installs) and @16's bundled
+      # plugin calls the removed context.getFilename. Stay on 9.x for now.
+      - dependency-name: "eslint"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "eslint-config-next"
+        update-types: ["version-update:semver-major"]
     groups:
       npm-patch-and-minor:
         patterns:
