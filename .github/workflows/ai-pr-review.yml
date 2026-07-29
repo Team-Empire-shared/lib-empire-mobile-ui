@@ -7,14 +7,14 @@
 #   gh variable set AI_REVIEW_ENABLED -b true   --repo <repo>
 #   gh secret   set ANTHROPIC_API_KEY -b <key>  --repo <repo>   # use a DEDICATED, budget-capped key
 #
-# Cost controls baked in: triggers only on PR open/ready (not every push),
+# Cost controls baked in: triggers on PR open/ready + each push (see concurrency),
 # skips drafts + bots + large diffs, Haiku model, capped turns + per-PR budget,
 # 10-min timeout, and cancels superseded runs. Note: it posts COMMENTS, not an
 # approving review — it does not replace the required human approval.
 name: AI PR Review
 on:
   pull_request:
-    types: [opened, ready_for_review]
+    types: [opened, ready_for_review, synchronize]
 
 permissions:
   contents: read
