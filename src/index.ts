@@ -22,6 +22,7 @@ export {
   startAppStateListener,
   setLockChangeListener,
   isLocked,
+  hydrateLockState,
 } from "./lib/biometric";
 export {
   EmpireWebSocket,
