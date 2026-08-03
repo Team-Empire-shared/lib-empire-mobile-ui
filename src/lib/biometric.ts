@@ -54,6 +54,23 @@ async function clearLastActive(): Promise<void> {
   }
 }
 
+/**
+ * Read the session token without letting a throwing store escape.
+ *
+ * A rejection here would surface as an unhandled promise rejection on the app's
+ * STARTUP path (hydrateLockState is invoked fire-and-forget). Treat an
+ * unreadable store as signed out: if storage cannot be read the app cannot
+ * authenticate anyway, and stranding a user behind a lock they cannot clear is
+ * worse than not locking — the same direction as the rest of the fail-safe.
+ */
+async function readToken(tokenKey: string): Promise<string | null> {
+  try {
+    return await getItem(tokenKey);
+  } catch {
+    return null;
+  }
+}
+
 async function readLastActive(): Promise<number | null> {
   try {
     const raw = await getItem(LAST_ACTIVE_KEY);
@@ -112,7 +129,7 @@ export async function hydrateLockState(
   tokenKey: string,
   lockTimeoutMs = DEFAULT_LOCK_TIMEOUT_MS,
 ): Promise<boolean> {
-  const token = await getItem(tokenKey);
+  const token = await readToken(tokenKey);
   if (!token) {
     // Signed out: nothing to protect, and a stale timestamp left behind would
     // lock whoever signs in next.
@@ -154,7 +171,7 @@ export function startAppStateListener(
       // Persist on the way out: this is the timestamp a later cold start reads.
       await markActive();
     } else if (state === "active") {
-      const token = await getItem(tokenKey);
+      const token = await readToken(tokenKey);
       if (!token) {
         backgroundAt = null;
         await clearLastActive();
@@ -173,7 +190,11 @@ export function startAppStateListener(
 
   // Cold-start evaluation. Fire-and-forget so the caller still receives its
   // unsubscribe function synchronously, exactly as before.
-  void hydrateLockState(tokenKey, lockTimeoutMs);
+  // .catch is load-bearing: this runs on the app's startup path, so any
+  // rejection here would be an unhandled promise rejection at launch.
+  void hydrateLockState(tokenKey, lockTimeoutMs).catch(() => {
+    /* leave the app unlocked rather than break startup */
+  });
 
   const subscription = AppState.addEventListener("change", handleChange);
   return () => subscription.remove();

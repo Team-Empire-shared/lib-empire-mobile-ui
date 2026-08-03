@@ -21,6 +21,7 @@ interface Opts {
   authSucceeds?: boolean;
   hardwareThrows?: boolean;
   setItemThrows?: boolean;
+  getItemThrows?: boolean;
 }
 
 /**
@@ -37,6 +38,7 @@ function coldStart(opts: Opts = {}) {
     authSucceeds = true,
     hardwareThrows = false,
     setItemThrows = false,
+    getItemThrows = false,
   } = opts;
   const backing: Store = { ...store };
 
@@ -45,9 +47,10 @@ function coldStart(opts: Opts = {}) {
     const SecureStore = require("expo-secure-store");
     const LocalAuth = require("expo-local-authentication");
 
-    SecureStore.getItemAsync.mockImplementation(
-      async (k: string) => backing[k] ?? null,
-    );
+    SecureStore.getItemAsync.mockImplementation(async (k: string) => {
+      if (getItemThrows) throw new Error("keychain unreadable");
+      return backing[k] ?? null;
+    });
     SecureStore.setItemAsync.mockImplementation(
       async (k: string, v: string) => {
         if (setItemThrows) throw new Error("keychain locked");
@@ -183,6 +186,35 @@ describe("fail-safe — must survive the fix", () => {
 
     // Unknown stamp -> locks; the failing write must not blow up startup.
     await expect(bio.hydrateLockState(TOKEN_KEY, TIMEOUT)).resolves.toBe(true);
+  });
+  it("does not reject when the store itself throws on read", async () => {
+    // hydrateLockState runs fire-and-forget on the app's startup path, so an
+    // escaping rejection here is an unhandled promise rejection at launch.
+    const { bio } = coldStart({
+      store: { [TOKEN_KEY]: "jwt-abc" },
+      getItemThrows: true,
+    });
+
+    await expect(bio.hydrateLockState(TOKEN_KEY, TIMEOUT)).resolves.toBe(false);
+    expect(bio.isLocked()).toBe(false);
+  });
+
+  it("startAppStateListener survives a throwing store without an unhandled rejection", async () => {
+    const { bio } = coldStart({
+      store: { [TOKEN_KEY]: "jwt-abc" },
+      getItemThrows: true,
+    });
+    const unhandled: unknown[] = [];
+    const onUnhandled = (r: unknown) => unhandled.push(r);
+    process.on("unhandledRejection", onUnhandled);
+
+    const unsubscribe = bio.startAppStateListener(TOKEN_KEY, TIMEOUT);
+    await new Promise((r) => setImmediate(r));
+    await new Promise((r) => setImmediate(r));
+    unsubscribe();
+
+    process.off("unhandledRejection", onUnhandled);
+    expect(unhandled).toEqual([]);
   });
 });
 
