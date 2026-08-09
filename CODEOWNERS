@@ -1,2 +1,12 @@
-# Code Owners — CEO reviews all changes
-* @nidin-cyber
+# Code Owners.
+#
+# CODEOWNERS is OR, not AND: approval from any ONE listed owner satisfies the
+# org ruleset's require_code_owner_review. GitHub never lets the PR author
+# satisfy it, so a single-owner file makes that owner's own PRs unapprovable
+# under that rule — which is what this file used to be.
+#
+# Every owner listed here must hold WRITE on this repo. An entry for someone
+# without it is silently ignored, which reads as a fix without being one:
+#   gh api repos/Team-Empire-shared/lib-empire-mobile-ui/collaborators/<user>/permission
+# Verified 2026-08-10: mano139 = admin, gishnu-codnov = write.
+* @nidin-cyber @mano139 @gishnu-codnov
