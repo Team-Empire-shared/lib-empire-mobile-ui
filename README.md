@@ -381,4 +381,9 @@ npm test        # Jest
 
 ## License
 
-Private -- internal use only.
+Proprietary — source available, not open source. Copyright (c) 2024-2026
+Empire Group of Companies. All rights reserved. See [LICENSE](./LICENSE).
+
+This repository is public **only** so Empire Group build infrastructure can
+fetch it without credentials (the Expo build servers hold no GitHub creds).
+That is a build requirement, not an invitation to reuse.
