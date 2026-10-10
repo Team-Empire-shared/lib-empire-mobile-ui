@@ -9,4 +9,11 @@
 # without it is silently ignored, which reads as a fix without being one:
 #   gh api repos/Team-Empire-shared/lib-empire-mobile-ui/collaborators/<user>/permission
 # Verified 2026-08-10: mano139 = admin, gishnu-codnov = write.
-* @nidin-cyber @mano139 @gishnu-codnov
+# Default owner: the owning team under the Team Empire Engineering Plan
+# (CEO-approved 2026-10-09), with @mano139 as fallback so no repo depends on
+# one person. The team holds write on this repo (owners without write are
+# silently ignored by GitHub). @nidin-cyber was removed as a code owner on
+# 2026-10-10: every AI session on the CEO's machine authenticates as
+# nidin-cyber, so its approval could satisfy code-owner review without any
+# human. A human owner must now approve.
+* @Team-Empire-shared/platform @mano139
